@@ -32,10 +32,10 @@ To run the game, use the following command:
 
 Contributions are welcome! Feel free to send pull requests with improvements, bug fixes, or new features.
 
-|                                                 | GitHub                      |
-|-------------------------------------------------|-----------------------------|
-| <img src="https://avatars.githubusercontent.com/u/106706496?v=4" width="50" height="50"> | [evertonsmotta](https://github.com/evertonsmotta) |
-| <img src="https://avatars.githubusercontent.com/u/43698585?v=4" width="50" height="50"> | [JoelenCruz](https://github.com/JoelenCruz) |
+|                                                 | GitHub                      |    Linkedin                 |
+|-------------------------------------------------|-----------------------------|-----------------------------|
+| <img src="https://avatars.githubusercontent.com/u/106706496?v=4" width="50" height="50"> | [evertonsmotta](https://github.com/evertonsmotta) | [Everton Mota](https://www.linkedin.com/in/everton-mota-0b91b29a/)|
+| <img src="https://avatars.githubusercontent.com/u/43698585?v=4" width="50" height="50"> | [JoelenCruz](https://github.com/JoelenCruz) | [Joelen Cruz da Silva](https://www.linkedin.com/in/joelen-cruz-da-silva-5b2a43113/) |
 
 
 ## License
