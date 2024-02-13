@@ -7,12 +7,12 @@ make a dynamic view inside a maze, in which you’ll have to find your way.
 1. Clone this repository:  
 
 ```
-git clone https://github.com/JoelenCruz/Cub3d_level4_42 cub3d_jcruz
+git clone https://github.com/JoelenCruz/Cub3d_level4_42 cub3d_evdos-sa_jcruz-da
 ```
 
 2. Navigate to the project directory:  
 ```
-cd cub3d_jcruz
+cd cub3d_evdos-sa_jcruz-da
 ```
 
 3. Compile the project using the Makefile:
