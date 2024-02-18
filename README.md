@@ -26,6 +26,8 @@ To run the game, use the following command:
 ## Resources
 
 
+
+- [cub3d hackMD](https://hackmd.io/@nszl/H1LXByIE2#player-direction-vector-and-camera-vector)
 - [Wolfenstein 3D](http://users.atw.hu/wolf3d/)
 - [42docs](https://harm-smits.github.io/42docs/projects/cub3d)
 - [miniLibX Documentation](https://harm-smits.github.io/42docs/libs/minilibx)
