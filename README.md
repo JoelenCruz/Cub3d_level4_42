@@ -25,6 +25,8 @@ To run the game, use the following command:
 
 ## Resources
 
+
+- [42docs](https://harm-smits.github.io/42docs/projects/cub3d)
 - [miniLibX Documentation](https://harm-smits.github.io/42docs/libs/minilibx)
 - [Wolfenstein 3D Tutorial](https://permadi.com/1996/05/ray-casting-tutorial-table-of-contents/)
 
