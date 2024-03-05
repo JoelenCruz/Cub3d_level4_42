@@ -22,30 +22,10 @@ OBJ_DIR		 = objects/
 
 LFT_DIR	 = libft/
 
-SRC			 = main.c \
-			   cub_init.c \
-			   cub_mlx_init.c \
-			   get_scene_description_data.c \
-			   get_map.c \
-			   check_map.c \
-			   cub_run.c \
-			   actions.c \
-			   draw_background.c \
-			   draw_pixel.c \
-			   draw_rectangle.c \
-			   choose_wall_math.c \
-			   draw_3d_scene.c \
-			   raycast_utils.c \
-			   raycast.c \
-			   player_movement.c \
-			   free.c \
-			   cub_exit.c
+SRC			 = main.c 
 
 HDR			 = structs.h \
-			   cub_init.h \
-			   cub_run.h \
-			   free.h \
-			   cub_exit.h
+			   
 
 HDR			:= ${addprefix ${HDR_DIR}, ${HDR}}
 
