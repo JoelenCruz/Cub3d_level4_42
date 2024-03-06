@@ -19,8 +19,13 @@ CC			= cc
 LINKS	 	= -lmlx -lXext -lX11 -Llibft -Lminilibx_linux 
 CFLAGS		= -Wall -Werror -Wextra
 HEADERS		:=	includes
-LIBFT	 	= ./libft/libft.a 
-SRCS		= ./sources/main.c 
+LIBFT	 	= ./libft/libft.a
+
+SRCS		= 	./sources/main.c \
+				./sources/init/init.c \
+				./sources/exit/exit.c  \
+				./sources/exit/free.c \
+
 OBJS		:=	$(SRCS:.c=.o)
 
 
