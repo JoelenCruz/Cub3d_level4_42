@@ -10,99 +10,70 @@
 #                                                                              #
 # **************************************************************************** #
 
+# *==============================================================================
+# *VARIABLES
+# *==============================================================================
+
+NAME		= cub3D
+CC			= cc
+LINKS	 	= -lmlx -lXext -lX11 -Llibft -Lminilibx_linux 
+CFLAGS		= -Wall -Werror -Wextra
+HEADERS		:=	includes
+LIBFT	 	= ./libft/libft.a 
+SRCS		= ./sources/main.c 
+OBJS		:=	$(SRCS:.c=.o)
 
 
-NAME		 = cub3D
+VGFLAGS		:=	--leak-check=full --show-leak-kinds=all
 
-SRC_DIR		 = sources/
+# *==============================================================================
+# *COLORS
+# *==============================================================================
 
-HDR_DIR		 = headers/
+GREEN		:=	\033[1;32m
+RED			:=	\033[1;31m
+WHT			:=	\033[1;37m
+EOC			:=	\033[1;0m
 
-OBJ_DIR		 = objects/
+# ==============================================================================
+# RECIPES	
+# ==============================================================================
 
-LFT_DIR	 = libft/
+all:		$(NAME)
 
-SRC			 = main.c 
+%.o:		%.c
+			@$(CC) $(CFLAGS) -I $(HEADERS) -c $< -o $@
 
-HDR			 = structs.h \
-			   
+$(NAME):	$(OBJS) $(LIBFT)
+			@echo "$(WHT)Compiling CUB3D...$(EOC)"
+			@$(CC) $(OBJS) $(LINKS) $(LIBFT) -o $@
+			@echo "$(GREEN)CUB3D build completed.$(EOC)"
 
-HDR			:= ${addprefix ${HDR_DIR}, ${HDR}}
-
-OBJ			 = ${addprefix ${OBJ_DIR}, ${SRC:%.c=%.o}}
-
-LIBFT		 = ${LFT_DIR}libft.a
-
-VPATH		 = init/ run/ exit/
-
-VPATH		:= ${SRC_DIR} ${addprefix ${SRC_DIR}, ${VPATH}}
-
-INCLUDE		 = ${HDR_DIR} ${LFT_DIR}
-
-INCLUDE		:= ${addprefix -I, ${INCLUDE}}
-
-CFLAGS		 = -Wall -Werror -Wextra
-
-MKFLAGS		 = -j35 -s --no-print-directory --directory=${LFT_DIR}
-
-MLXFLAGS	 = -lmlx -lXext -lX11 -Lminilibx_linux
-
-MTFLAGS		 = -lm
-
-OT_FLAGS	 = ${MLXFLAGS} ${MTFLAGS}
-
-CC			 = cc
-
-RM			 = rm -rf
-
-UPDATE		 = NO
-
-CUB3D_MSG	 = "\033[1;35mcub3D\033[0m:"
-
-RECIPE_NAME	 = ${NAME}
-
-all: set_recipe_name ${NAME}
-
-${NAME}: ${OBJ_DIR} ${OBJ} FORCE
-	@make ${MKFLAGS} | \
-	tee /dev/stderr | \
-	if grep -q "Nothing to be done for "; \
-	then \
-		if [ ${UPDATE} = YES ]; \
-		then \
-			echo ${CUB3D_MSG} Building ${NAME}; \
-			${CC} ${CFLAGS} ${OBJ} ${INCLUDE} ${LIBFT} ${OT_FLAGS} -o ${NAME}; \
-		else \
-			echo ${CUB3D_MSG} Nothing to be done for \'${RECIPE_NAME}\'.; \
-		fi \
-	else \
-		echo ${CUB3D_MSG} Building ${NAME}; \
-		${CC} ${CFLAGS} ${OBJ} ${INCLUDE} ${LIBFT} ${OT_FLAGS} -o ${NAME}; \
-	fi
+$(LIBFT):
+			@echo "$(WHT)Compiling libft...$(EOC)"
+			@make -C libft
+			@echo "$(GREEN)Libft done.$(EOC)"
 
 clean:
-	@echo ${CUB3D_MSG} Removing ${NAME}\'s objects
-	@${RM} ${OBJ_DIR}
-	@make clean ${MKFLAGS}
+			@echo "$(WHT)Removing .o files...$(EOC)"
+			@rm -f $(OBJS)
+			@make -C libft clean
+			@echo "$(GREEN)Clean done.$(EOC)"
 
-fclean:
-	@echo ${CUB3D_MSG} Removing ${NAME}\'s  objects and binaries
-	@make fclean ${MKFLAGS}
-	@${RM} ${NAME} ${OBJ_DIR}
+fclean:		clean
+			@echo "$(WHT)Removing object- and binary -files...$(EOC)"
+			@rm -f $(NAME)
+			@make -C libft fclean
+			@echo "$(GREEN)Fclean done.$(EOC)"
 
-re: fclean all
+re:			fclean all
 
-${OBJ_DIR}:
-	@mkdir -p ${OBJ_DIR}
+run:		all
+			clear
+			./$(NAME) $(ARGV)
 
-${OBJ_DIR}%.o: %.c ${HDR}
-	@echo ${CUB3D_MSG} Compiling $@
-	@${CC} -c ${CFLAGS} ${INCLUDE} $< -o $@
-	$(eval UPDATE = YES)
+vg:			all
+			clear
+			valgrind $(VGFLAGS) ./$(NAME) $(ARGV)
 
-set_recipe_name:
-	$(eval RECIPE_NAME = all)
-
-FORCE:
-
-.PHONY: all set_recipe_name clean fclean re FORCE
+.PHONY:		all clean fclean re vg
