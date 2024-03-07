@@ -6,12 +6,16 @@
 /*   By: joe <joe@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 12:20:39 by joe               #+#    #+#             */
-/*   Updated: 2024/03/06 13:46:03 by joe              ###   ########.fr       */
+/*   Updated: 2024/03/07 15:15:27 by joe              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
+/**
+ * @brief Free the memory of a matrix
+ * @param mat 
+ */
 void	free_mat(char ***mat)
 {
 	size_t	i;
@@ -23,13 +27,19 @@ void	free_mat(char ***mat)
 		free (*mat);
 	*mat = NULL;
 }
-
+/**
+ * @brief Free a pointer
+ * @param str 
+ */
 void	free_ptr(char **str)
 {
 	free (*str);
 	*str = NULL;
 }
-
+/**
+ * @brief Free the memory of the struct cub
+ * @param cub 
+ */
 void	free_memory(t_cub *cub)
 {
 // 	if (cub -> textures.north_image)
