@@ -14,6 +14,8 @@
 # MAKEFILE FOR CUB3D
 # --------------------------------------------------------- #
 
+# Falta excluir o obj apos o make fclean
+
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
 NAME = cub3D
