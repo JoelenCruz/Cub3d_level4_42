@@ -3,92 +3,128 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joe <joe@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: everton <everton@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/06 10:59:33 by joe               #+#    #+#             */
-/*   Updated: 2024/03/06 13:48:43 by joe              ###   ########.fr       */
+/*   Created: 2024/03/13 20:10:34 by everton           #+#    #+#             */
+/*   Updated: 2024/03/19 19:07:10 by everton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB3D_H
+#ifndef	CUB3D_H
 # define CUB3D_H
 
-// *=============================================================================
-// *EXTERNAL LIBRARIES
-// *=============================================================================
-
-# include <errno.h>		// perror
-# include <fcntl.h>		// open, close, read
-# include <math.h>
+/* -------------------------------------------------------------------------- */
+/* INCLUDES                                                                   */
+/* -------------------------------------------------------------------------- */
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
 # include <stddef.h>
-# include <stdio.h>		// printf
-# include <stdlib.h>	// malloc, free
-# include <string.h>	// strerror
-# include <unistd.h>	// write, exit
+# include <fcntl.h>
+# include <math.h>
+# include <string.h>
+# include <errno.h>
+# include <limits.h>
+# include <stdbool.h>
+# include <mlx.h>
+# include <libft.h>
 
-
-// *=============================================================================
-// *LOCAL LIBRARIES
-// *=============================================================================
-
-# include "../minilibx_linux/mlx.h"
-# include "../libft/libft.h"
-
-// *=============================================================================
-// *MACROS
-// *=============================================================================
-
-# define WIN_NAME "CUB3D jcruz-da /\ evdos-sa"
+/* -------------------------------------------------------------------------- */
+/* DEFINES                                                                    */
+/* -------------------------------------------------------------------------- */
+# define WIN_NAME "Cub3d"
+# define WIN_WIDTH 800
 # define WIN_HEIGHT 600
-# define WIN_WIDTH 960
+# define PI 3.14159265358979323846
+# define FOV 60
+# define TILE_SIZE 64
+# define MOVE_SPEED 0.1
+# define ROTATE_SPEED 0.05
+# define NORTH 0
+# define SOUTH 1
+# define EAST 2
+# define WEST 3
+# define WALL 1
+# define SPRITE 2
+# define EMPTY 0
+# define PLAYER 3
+# define KEY_ESC 53
+# define KEY_W 13
+# define KEY_A 0
+# define KEY_S 1
+# define KEY_D 2
+# define KEY_LEFT 123
+# define KEY_RIGHT 124
 
-# define ERROR_EXTETION "\033[1;31mInvalid file extension\n\033[0m\n"
-# define ERROR_MSG	"\033[1;31mError: \033[0m"
-# define EXIT_MSG	"\033[1;35mSee you soon, human!\033[0m"
-#define  ERROR_ARGS "\033[1;31mInvalid number of arguments\n\033[0m\n"
+/* -------------------------------------------------------------------------- */
+/* STRUCTURES                                                                 */
+/* -------------------------------------------------------------------------- */
 
-// *=============================================================================
-// *STRUCTS
-// *=============================================================================
+typedef struct s_color
+{
+	int	r;
+	int	g;
+	int	b;
+}	t_color;
+
+typedef struct s_img
+{
+	void	*img;
+	void	*info;
+	char	*path;
+	int		*data;
+	int		bpp;
+	int		line_len;
+	int		endian;
+	int		height;
+	int		width;
+	t_color	floor_color;
+	t_color	ceiling_color;
+	t_color	color;
+}	t_img;
+
+typedef struct s_texture
+{
+	t_img	north;
+	t_img	south;
+	t_img	east;
+	t_img	west;
+}	t_texture;
+
+typedef struct s_player
+{
+	double	x;
+	double	y;
+	double	dir;
+	double	dir_x;
+	double	dir_y;
+}	t_player;
+
+typedef struct s_map
+{
+	char	**map_file;
+	char	**map_lines;
+	int		start_map;
+	size_t	width;
+	size_t	height;
+}	t_map;
 
 typedef struct s_cub
 {
-	//void		*mlx;
-	//void		*win;
-	char		*path_maps;
-	//char		**scene_map;
-	// int			map_height;
-	// int			map_width;
-	// t_img		img;
-	// t_texture	textures;
-	// t_color		colors;
-	// t_keys		keys;
-	// t_player	p;
+	void		*mlx;
+	void		*win;
+	t_img		img;
+	t_texture	texture;
+	t_player	player;
+	t_map		*map;
 }	t_cub;
 
+/* -------------------------------------------------------------------------- */
+/* PROTOTYPES                                                                 */
+/* -------------------------------------------------------------------------- */
 
-
-// *=============================================================================
-// *INIT
-// *=============================================================================
-
-void	cub_init(int argc, char *argv[], t_cub *cub);
-
-
-// *=============================================================================
-// *EXIT
-// *=============================================================================
-
-void	cub_exit(t_cub *cub, const char *msg, const int code);
-
-
-// *=============================================================================
-// *FREE
-// *=============================================================================
-
-void	free_memory(t_cub *cub);
-void	free_ptr(char **str);
+void	cub_init(t_cub *cub, char *file);
+void	cub_check_args(int argc, char **argv);
 
 
 #endif
-;
