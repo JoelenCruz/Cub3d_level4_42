@@ -1,0 +1,109 @@
+O projeto cub3d da Escola 42 é um dos projetos mais desafiadores. Ele tem como objetivo principal ensinar os fundamentos de programação gráfica e renderização de imagens em 3D usando a linguagem de programação C e a biblioteca gráfica miniLibX.
+
+Resumidamente, deve-se criar um jogo de tiro em primeira pessoa (FPS) inspirado no lendário jogo Wolfenstein 3D. O projeto envolve a implementação de um motor gráfico capaz de renderizar um ambiente 3D em uma janela, bem como a inclusão de mecânicas de jogo básicas, como movimento do jogador, detecção de colisões, projeção de texturas e manipulação de eventos do teclado.
+
+Além disso, deve-se criar um editor de mapas que permite a criação de layouts de níveis para o jogo. Também deve-se implementar a leitura de um arquivo de configuração que descreve as texturas, cores e layout do mapa do jogo.
+
+O projeto cub3d exige um bom conhecimento de programação em C, bem como habilidades de resolução de problemas e pensamento algorítmico. Ele oferece a oportunidade de explorar conceitos avançados de gráficos e aprofundar sua compreensão sobre como os jogos são desenvolvidos na prática.
+
+------------------------------------------------------------------------------------
+Mandatory part - cub3D
+
+Nome do programa: cub3D
+Entregue arquivos: Todos os seus arquivos
+Makefile: all, clean, fclean, re, bonus
+Argumentos: um mapa no formato *.cub
+Funções externas.
+ • open, close, read, write, printf, malloc, free, perror, strerror, exit.
+ • Todas as funções da biblioteca math (-lm man man 3 math)
+ • Todas as funções do MinilibX
+Libft autorizado: Sim
+Descrição: Você deve criar um gráfico 3D “realista” representação do interior de um labirinto a partir de um perspectiva em primeira pessoa. Você tem que criar isso representação usando os princípios de Ray-Casting mencionado anteriormente.
+
+As restrições são as seguintes:
+ • Você deve usar a miniLibX.  A versão que está disponível no sistema operacional sistema ou de suas fontes.  Se você optar por trabalhar com as fontes, você precisa aplicar as mesmas regras para o seu libft que aquelas escritas acima em Common Parte das instruções.
+ • A gestão da sua janela deve permanecer tranquila: mudar para outra janela dow, minimizando, etc.
+ • Exiba diferentes texturas de parede (a escolha é sua) que variam dependendo de qual lado que a parede está voltada (Norte, Sul, Leste, Oeste).
+ • Seu programa deve ser capaz de definir as cores do piso e do teto para duas cores diferentes.
+
+ • O programa exibe a imagem em uma janela e respeita as seguintes regras:
+ 	◦ As teclas de seta esquerda e direita do teclado devem permitir que você olhe para a esquerda e para a direita bem no labirinto.
+ 	◦ As teclas W, A, S e D devem permitir que você mova o ponto de vista O labirinto.
+ 	◦ Pressionar ESC deve fechar a janela e sair do programa corretamente.
+ 	◦ Clicar na cruz vermelha na moldura da janela deve fechar a janela e saia do programa de forma limpa.
+ 	◦ O uso de imagens do minilibX é fortemente recomendado.
+
+ • Seu programa deve tomar como primeiro argumento um arquivo de descrição de cena com a extensão .cub.
+ ◦ O mapa deve ser composto por apenas 6 caracteres possíveis: 0 para espaço vazio,
+ 1 para uma parede e N,S,E ou W para a posição inicial e desova do jogador orientação.
+
+Este é um mapa simples e válido:
+111111
+100101
+101001
+1100N1
+111111
+
+O mapa deve estar fechado/cercado por paredes, caso contrário o programa deve retornar um erro.
+ ◦ Exceto pelo conteúdo do mapa, cada tipo de elemento pode ser separado por um ou mais linha(s) vazia(s).
+ ◦ Exceto o conteúdo do mapa que sempre deve ser o último, cada tipo de elemento pode ser definido em qualquer ordem no arquivo.
+ ◦ Exceto o mapa, cada tipo de informação de um elemento pode ser separada por um ou mais espaço(s).
+ ◦ O mapa deve ser analisado conforme aparece no arquivo. Os espaços são uma parte válida do mapa e cabe a você lidar com isso. Você deve ser capaz de analisar qualquer tipo de mapa, desde que respeite as regras do mapa.
+
+A primeira informação de cada elemento (exceto o mapa) é o identificador de tipo (representado por um ou dois caracteres), seguido de todas as informações específicas para cada objeto em uma ordem estrita, como:
+
+ ∗ North texture:
+	NO ./path_to_the_north_texture
+		· identificador: NO
+		· caminho para a textura norte
+
+ ∗ South texture:
+	SO ./path_to_the_south_texture
+		· identificador: SO
+		· caminho para a textura sul
+
+ ∗ West texture:
+	WE ./path_to_the_west_texture
+		· identificador: WE
+		· caminho para a textura oeste
+
+ ∗ East texture:
+	EA ./path_to_the_east_texture
+		· identificador: EA
+		· caminho para a textura leste
+
+ ∗ Floor color:
+	F 220.100,0
+		· identificador: F
+		· Cores R,G,B na faixa [0,255]: 0, 255, 255
+
+∗ Ceiling color:
+	 C 225,30,0
+		· identificador: C
+		· Cores R,G,B na faixa [0,255]: 0, 255, 255
+
+Exemplo de parte obrigatória com cena .cub minimalista:
+NO ./path_to_the_north_texture
+SO ./path_to_the_south_texture
+WE ./path_to_the_west_texture
+EA ./path_to_the_east_texture
+F 220,100,0
+C 225,30,0
+1111111111111111111111111
+1000000000110000000000001
+1011000001110000000000001
+1001000000000000000000001
+111111111011000001110000000000001
+100000000011000001110111111111111
+11110111111111011100000010001
+11110111111111011101010010001
+11000000110101011100000010001
+10000000000000001100000010001
+10000000000000001101010010001
+11000001110101011111011110N0111
+11110111 1110101 101111010001
+11111111 1111111 111111111111
+
+Se qualquer tipo de configuração incorreta for encontrada no arquivo, o programa
+deve sair corretamente e retornar "Erro\n" seguido por uma mensagem de erro explícita
+da sua escolha.
