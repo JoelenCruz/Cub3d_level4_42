@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: everton <everton@student.42.fr>            +#+  +:+       +#+        */
+/*   By: joe <joe@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 20:10:34 by everton           #+#    #+#             */
-/*   Updated: 2024/03/19 19:07:10 by everton          ###   ########.fr       */
+/*   Updated: 2024/04/06 14:03:54 by joe              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,12 +119,71 @@ typedef struct s_cub
 	t_map		*map;
 }	t_cub;
 
+
+
+
 /* -------------------------------------------------------------------------- */
-/* PROTOTYPES                                                                 */
+/* main                                                              */
 /* -------------------------------------------------------------------------- */
 
-void	cub_init(t_cub *cub, char *file);
+int	is_surrounded_walls(t_cub *cub);
+void	get_direction(t_cub *cub, size_t x, size_t y);
+void	cub_start(t_cub *cub);
+
+
+
+/* ------------------------------------------------------------------------- */
+/* check_map                                                          		 */
+/* ------------------------------------------------------------------------- */
+
+void	read_map_file(t_cub *cub, char *filename);
 void	cub_check_args(int argc, char **argv);
 
+
+
+/* ------------------------------------------------------------------------- */
+/* cub_map                                                          		 */
+/* ------------------------------------------------------------------------- */
+
+void	set_zero(t_cub *cub);
+void	read_cub_map_file(t_cub *cub);
+void	cub_init(t_cub *cub, char *file);
+
+
+
+/* ------------------------------------------------------------------------- */
+/* mlx_init                                                          		 */
+/* ------------------------------------------------------------------------- */
+
+void	draw_pixel(t_cub *cub, int x, int y, t_color color);
+void	load_texture(t_cub *cub, t_img *texture);
+void	render_textures(t_cub *cub);
+void render_frame(t_cub *cub);
+
+
+
+/* ------------------------------------------------------------------------- */
+/* parse                                                        		 */
+/* ------------------------------------------------------------------------- */
+
+void	parse_color_line(char *str, t_img *img);
+int	is_texture_or_color_line(t_cub *cub, char *str);
+int	is_texture_or_color(char *str);
+int	is_map_line(char *str);
+void	print_read_map_lines(t_cub *cub);
+void	parse_texture_line(char *str, t_texture *texture);
+void	parse_map_line(t_cub *cub, char *str);
+int	parser_cub(t_cub *cub);
+
+
+
+/* ------------------------------------------------------------------------- */
+/* utils                                                        		 */
+/* ------------------------------------------------------------------------- */
+
+int	is_empty_or_spaces(char *str);
+int	check_chars(t_cub *cub);
+void	get_player_info(t_cub *cub);
+void	print_read_map_file(t_cub *cub);
 
 #endif
