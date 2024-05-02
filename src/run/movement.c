@@ -1,0 +1,65 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub_init.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: joe <joe@student.42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/06 11:21:30 by joe               #+#    #+#             */
+/*   Updated: 2024/04/06 13:45:48 by joe              ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "cub3d.h"
+
+static void	player_move(t_cub *cub, double new_x, double new_y)
+{
+	int	x_forward;
+	int	y_forward;
+
+	x_forward = (int)(cub -> p.x + (new_x * 8) * STEPS);
+	y_forward = (int)(cub -> p.y + (new_y * 8) * STEPS);
+	if (cub->map->map_lines[(int)cub -> p.y][x_forward] != '1')
+	{
+		cub -> p.x += new_x * STEPS;
+		cub -> p.col_x = x_forward * (WIN_WIDTH / cub -> img.width);
+	}
+	if (cub->map->map_lines[y_forward][(int)cub -> p.x] != '1')
+	{
+		cub -> p.y += new_y * STEPS;
+		cub -> p.col_y = y_forward * (WIN_HEIGHT / cub -> img.height);
+	}
+}
+
+static void	player_turn(t_cub *cub, int direction)
+{
+	if (direction == LEFT)
+		cub -> p.ang -= TURN_ANG + (cub -> p.ang < 0) * (2 * PI);
+	else
+		cub -> p.ang += TURN_ANG - (cub -> p.ang > 2) * (2 * PI);
+	if (cub -> p.ang < 0)
+		cub -> p.ang += 2 * PI;
+	if (cub -> p.ang > 2 * PI)
+		cub -> p.ang -= 2 * PI;
+	cub -> p.dx = cos (cub -> p.ang);
+	cub -> p.dy = sin (cub -> p.ang);
+}
+
+void	check_keys(t_cub *cub)
+{
+	if (cub -> keys.esc == PRESSED)
+		cub_exit (cub, NULL, 0);
+	if (cub -> keys.up == PRESSED || cub -> keys.w == PRESSED)
+		player_move (cub, -cub -> p.dx * STEPS, -cub -> p.dy * STEPS);
+	if (cub -> keys.down == PRESSED || cub -> keys.s == PRESSED)
+		player_move (cub, cub -> p.dx * STEPS, cub -> p.dy * STEPS);
+	if (cub -> keys.a == PRESSED)
+		player_move (cub, -cub -> p.dy * STEPS, cub -> p.dx * STEPS);
+	if (cub -> keys.d == PRESSED)
+		player_move (cub, cub -> p.dy * STEPS, -cub -> p.dx * STEPS);
+	if (cub -> keys.left == PRESSED)
+		player_turn (cub, LEFT);
+	if (cub -> keys.right == PRESSED)
+		player_turn (cub, RIGHT);
+}
+
