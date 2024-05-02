@@ -52,31 +52,31 @@ int	is_surrounded_walls(t_cub *cub)
 
 void	get_direction(t_cub *cub, size_t x, size_t y)
 {
-	cub->player.x = x + 0.5;
-	cub->player.y = y + 0.5;
+	cub->p.x = x + 0.5;
+	cub->p.y = y + 0.5;
 	if (cub->map->map_lines[y][x] == 'N')
 	{
-		cub->player.dir = PI / 2;
-		cub->player.dir_x = -1;
-		cub->player.dir_y = 0;
+		cub->p.ang = PI / 2;
+		cub->p.dx = -1;
+		cub->p.dy = 0;
 	}
 	else if (cub->map->map_lines[y][x] == 'S')
 	{
-		cub->player.dir = 3 * PI / 2;
-		cub->player.dir_x = 1;
-		cub->player.dir_y = 0;
+		cub->p.ang = 3 * PI / 2;
+		cub->p.x = 1;
+		cub->p.y = 0;
 	}
 	else if (cub->map->map_lines[y][x] == 'W')
 	{
-		cub->player.dir = PI;
-		cub->player.dir_x = 0;
-		cub->player.dir_y = -1;
+		cub->p.ang = PI;
+		cub->p.dx = 0;
+		cub->p.dy = -1;
 	}
 	else if (cub->map->map_lines[y][x] == 'E')
 	{
-		cub->player.dir = 0;
-		cub->player.dir_x = 0;
-		cub->player.dir_y = 1;
+		cub->p.ang = 0;
+		cub->p.dx = 0;
+		cub->p.dy = 1;
 	}
 }
 

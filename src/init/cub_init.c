@@ -12,61 +12,27 @@
 
 #include "cub3d.h"
 
-
-void	set_zero(t_cub *cub)
+static void	cub_bzero(t_cub *cub)
 {
-	printf("\n\nIN SET_ZERO\n");
-
-	cub->mlx = NULL;
-	cub->win = NULL;
-	cub->map = ft_calloc(1, sizeof(t_map));
+	cub->map = ft_calloc(1, sizeof(t_map));//tem ponteiro de ponteiro?
 	if (!cub->map)
 	{
-		printf("Error: memory allocation failed\n");
+		printf(ERROR_MEMORY);
 		exit(EXIT_FAILURE);
 	}
-	cub->map->map_file = NULL;
-	cub->map->map_lines = NULL;
-	cub->map->start_map = 0;
-	cub->map->width = 0;
-	cub->map->height = 0;
-	cub->img.img = NULL;
-	cub->img.path = NULL;
-	cub->img.bpp = 0;
-	cub->img.line_len = 0;
-	cub->img.endian = 0;
-	cub->img.width = 0;
-	cub->img.height = 0;
-	cub->img.floor_color.r = 0;
-	cub->img.floor_color.g = 0;
-	cub->img.floor_color.b = 0;
-	cub->img.ceiling_color.r = 0;
-	cub->img.ceiling_color.g = 0;
-	cub->img.ceiling_color.b = 0;
-	cub->texture.north.img = NULL;
-	cub->texture.north.path = NULL;
-	cub->texture.south.img = NULL;
-	cub->texture.south.path = NULL;
-	cub->texture.east.img = NULL;
-	cub->texture.east.path = NULL;
-	cub->texture.west.img = NULL;
-	cub->texture.west.path = NULL;
-	cub->player.x = 0;
-	cub->player.y = 0;
-	cub->player.dir = 0;
-	cub->player.dir_x = 0;
-	cub->player.dir_y = 0;
-
-	printf("\n\nOUT SET_ZERO\n");
+	ft_bzero (&cub -> mlx, sizeof (void));
+	ft_bzero (&cub -> win, sizeof (void));
+	ft_bzero (&cub -> img, sizeof (t_img));
+	ft_bzero (&cub -> texture, sizeof (t_texture));
+	//ft_bzero (&cub -> keys, sizeof (t_keys));
+	ft_bzero (&cub -> p, sizeof(t_player));
 }
 
 
 void	read_cub_map_file(t_cub *cub)
 {
 	printf("\n\nIN READ_CUB_MAP_FILE\n");
-
 	size_t	i;
-
 	i = 0;
 	while (cub->map->map_file[i])
 	{
@@ -96,20 +62,19 @@ void	read_cub_map_file(t_cub *cub)
 void	cub_init(t_cub *cub, char *file)
 {
 	printf("\n\nIN CUB_INIT\n");
-
-	set_zero(cub);
+	cub_bzero(cub);
 	read_map_file(cub, file);
 	if (parser_cub(cub))
 	{
-		printf("Error\nInvalid map\n");
-		exit(1);
+		printf(ERROR_INVALID_MAP);
+		exit(EXIT_FAILURE);
 	}
 	get_player_info(cub);
-	printf("player.x: %f\n", cub->player.x);
-	printf("player.y: %f\n", cub->player.y);
-	printf("player.dir: %f\n", cub->player.dir);
-	printf("player.dir_x: %f\n", cub->player.dir_x);
-	printf("player.dir_y: %f\n", cub->player.dir_y);
+	printf("player.x: %f\n", cub->p.x);
+	printf("player.y: %f\n", cub->p.y);
+	printf("player.dir: %f\n", cub->p.ang);
+	printf("player.dir_x: %f\n", cub->p.dx);
+	printf("player.dir_y: %f\n", cub->p.y);
 
 	// if (!cub->map->map_lines || !cub->player.x || !cub->player.y || !cub->player.dir || !cub->player.dir_x || !cub->player.dir_y)
 	// {

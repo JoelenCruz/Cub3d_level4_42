@@ -26,8 +26,8 @@
 # include <errno.h>
 # include <limits.h>
 # include <stdbool.h>
-# include <mlx.h>
-# include <libft.h>
+# include "../minilibx_linux/mlx.h"
+# include "../libft/libft.h"
 
 /* -------------------------------------------------------------------------- */
 /* DEFINES                                                                    */
@@ -35,7 +35,7 @@
 # define WIN_NAME "Cub3d"
 # define WIN_WIDTH 800
 # define WIN_HEIGHT 600
-# define PI 3.14159265358979323846
+
 # define FOV 60
 # define TILE_SIZE 64
 # define MOVE_SPEED 0.1
@@ -48,17 +48,73 @@
 # define SPRITE 2
 # define EMPTY 0
 # define PLAYER 3
-# define KEY_ESC 53
-# define KEY_W 13
-# define KEY_A 0
-# define KEY_S 1
-# define KEY_D 2
-# define KEY_LEFT 123
-# define KEY_RIGHT 124
 
+
+
+# define ESC_KEY 65307
+# define LEFT_KEY 65361
+# define UP_KEY 65362
+# define RIGHT_KEY 65363
+# define DOWN_KEY 65364
+
+# define LEFT 1
+# define RIGHT 2
+
+# define PRESSED 1
+# define RELEASED 2
+
+# define PI 3.1415
+# define DR 0.0174533
+
+# define MAX_DIST 1000000000
+# define MAX_RAYS 480
+# define RAY_HORIZONTAL_SIZE 16
+# define FOV 60
+# define WALL_HEIGHT 700
+
+# define PRECISION_DOWN 0.00001
+# define PRECISION_UP 1
+
+# define STEPS 0.25
+# define TURN_ANG 0.07
+
+
+// # define KEY_ESC 53
+// # define KEY_W 13
+// # define KEY_A 0
+// # define KEY_S 1
+// # define KEY_D 2
+// # define KEY_LEFT 123
+// # define KEY_RIGHT 124
+
+/* -------------------------------------------------------------------------- */
+/* MACROS                                                                */
+/* -------------------------------------------------------------------------- */
+
+# define ERROR_NUMB_ARG "Error\nInvalid number of arguments.\n"
+# define ERROR_EXTENSION "Error\nInvalid file extension.\n"
+# define ERROR_MEMORY "Error:\nMemory allocation failed\n"
+# define ERROR_INVALID_MAP "Error:\nInvalod map\n"
+# define ERROR_RGB "Error:\n RGB values out of range (0-255)\n"
+# define ERROR_MSG "\033[1;31mError\n\033[0m"
+# define EXIT_MSG "\033[1;31mTO EXIT CUB3D!\n\033[0m"
 /* -------------------------------------------------------------------------- */
 /* STRUCTURES                                                                 */
 /* -------------------------------------------------------------------------- */
+
+typedef struct s_keys
+{
+	int	esc;
+	int	up;
+	int	down;
+	int	left;
+	int	right;
+	int	w;
+	int	a;
+	int	s;
+	int	d;
+}	t_keys;
+
 
 typedef struct s_color
 {
@@ -93,12 +149,15 @@ typedef struct s_texture
 
 typedef struct s_player
 {
-	double	x;
-	double	y;
-	double	dir;
-	double	dir_x;
-	double	dir_y;
-}	t_player;
+	float	x;
+	float	y;
+	float	col_x;
+	float	col_y;
+	float	dx;
+	float	dy;
+	float	ang;
+	int		direction;
+}			t_player;
 
 typedef struct s_map
 {
@@ -115,8 +174,9 @@ typedef struct s_cub
 	void		*win;
 	t_img		img;
 	t_texture	texture;
-	t_player	player;
+	t_player	p;
 	t_map		*map;
+	t_keys		keys;
 }	t_cub;
 
 
@@ -142,7 +202,7 @@ void	cub_check_args(int argc, char **argv);
 
 
 /* ------------------------------------------------------------------------- */
-/* cub_map                                                          		 */
+/* cub_init                                                          		 */
 /* ------------------------------------------------------------------------- */
 
 void	set_zero(t_cub *cub);
@@ -158,7 +218,8 @@ void	cub_init(t_cub *cub, char *file);
 void	draw_pixel(t_cub *cub, int x, int y, t_color color);
 void	load_texture(t_cub *cub, t_img *texture);
 void	render_textures(t_cub *cub);
-void render_frame(t_cub *cub);
+void 	render_frame(t_cub *cub);
+//void	cub_mlx_init(t_cub *cub);
 
 
 
@@ -173,7 +234,7 @@ int	is_map_line(char *str);
 void	print_read_map_lines(t_cub *cub);
 void	parse_texture_line(char *str, t_texture *texture);
 void	parse_map_line(t_cub *cub, char *str);
-int	parser_cub(t_cub *cub);
+int		parser_cub(t_cub *cub);
 
 
 
@@ -185,5 +246,41 @@ int	is_empty_or_spaces(char *str);
 int	check_chars(t_cub *cub);
 void	get_player_info(t_cub *cub);
 void	print_read_map_file(t_cub *cub);
+
+
+/* ------------------------------------------------------------------------- */
+/* cub_free                                                        		 */
+/* ------------------------------------------------------------------------- */
+
+void	free_mat(char ***mat);
+void	free_ptr(char **str);
+void	free_memory(t_cub *cub);
+
+
+/* ------------------------------------------------------------------------- */
+/* cub_exit                                                       		 */
+/* ------------------------------------------------------------------------- */
+
+int	cub_close(t_cub *cub);
+void	cub_exit(t_cub *cub, const char *msg, const int code);
+
+
+//void	print_read_map_file(t_cub *cub);
+
+
+/* ------------------------------------------------------------------------- */
+/* actions                                                       		 */
+/* ------------------------------------------------------------------------- */
+
+int	button_down(int key_code, t_cub *cub);
+int	button_up(int key_code, t_cub *cub);
+
+
+/* ------------------------------------------------------------------------- */
+/* movements                                                      		 */
+/* ------------------------------------------------------------------------- */
+
+void	check_keys(t_cub *cub);
+
 
 #endif

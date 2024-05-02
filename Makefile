@@ -26,6 +26,12 @@ SRC			 = main.c \
 			   parse.c \
 			   check_map.c \
 			   utils.c \
+			   cub_exit.c \
+			   cub_free.c \
+			   actions.c \
+			   movement.c \
+
+
 
 HDR			 = cub3d.h 
 
@@ -35,7 +41,7 @@ OBJ			 = ${addprefix ${OBJ_DIR}, ${SRC:%.c=%.o}}
 
 LIBFT		 = ${LFT_DIR}libft.a
 
-VPATH		 = init/
+VPATH		 = init/ exit/ run/
 
 VPATH		:= ${SRC_DIR} ${addprefix ${SRC_DIR}, ${VPATH}}
 

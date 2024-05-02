@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   parse.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: joe <joe@student.42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/06 11:20:34 by joe               #+#    #+#             */
-/*   Updated: 2024/04/06 13:45:38 by joe              ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "cub3d.h"
 
 
@@ -22,7 +10,7 @@ void	parse_color_line(char *str, t_img *img)
 	split = ft_split(str, ' ');
 	if (!split)
 	{
-		printf("Error: memory allocation failed\n");
+		printf(ERROR_MEMORY);
 		exit(EXIT_FAILURE);
 	}
 	if (split[0] && split[1] && split[2] && split[3])
@@ -127,7 +115,7 @@ void	parse_texture_line(char *str, t_texture *texture)
 	split = ft_split(str, ' ');
 	if (!split)
 	{
-		printf("Error: memory allocation failed\n");
+		printf(ERROR_MEMORY);
 		exit(EXIT_FAILURE);
 	}
 	if (split[0] && split[1])
@@ -176,7 +164,7 @@ void	parse_map_line(t_cub *cub, char *str)
 		new_map_lines = ft_calloc(cub->map->height + 1, sizeof(char *));
 		if (!new_map_lines)
 		{
-			printf("Error: memory allocation failed\n");
+			printf(ERROR_MEMORY);
 			exit(EXIT_FAILURE);
 		}
 		// Copia as linhas já existentes para a nova matriz
@@ -193,7 +181,7 @@ void	parse_map_line(t_cub *cub, char *str)
 		cub->map->map_lines[cub->map->height] = ft_strdup(str);
 		if (!cub->map->map_lines[cub->map->height])
 		{
-			printf("Error: memory allocation failed\n");
+			printf(ERROR_MEMORY);
 			exit(EXIT_FAILURE);
 		}
 		cub->map->height++;

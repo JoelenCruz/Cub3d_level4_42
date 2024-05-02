@@ -34,11 +34,10 @@ void	read_map_file(t_cub *cub, char *filename)
 	{
 		if (!is_empty_or_spaces(line) && line[0] != '\n')
 		{
-			// printf("LINE: %s\n", line);
 			temp = ft_calloc(i + 2, sizeof(char *)); // Aloca um novo array temporário
 			if (!temp)
 			{
-				printf("Error: memory allocation failed\n");
+				printf(ERROR_MEMORY);
 				exit(EXIT_FAILURE);
 			}
 			ft_memcpy(temp, cub->map->map_file, i * sizeof(char *)); // Copia os ponteiros existentes
@@ -65,12 +64,12 @@ void	cub_check_args(int argc, char **argv)
 
 	if (argc != 2)
 	{
-		printf("Error\nInvalid number of arguments.\n");
+		printf(ERROR_NUMB_ARG);
 		exit(1);
 	}
 	if (ft_strncmp(argv[1] + ft_strlen(argv[1]) - 4, ".cub", 4))
 	{
-		printf("Error\nInvalid file extension.\n");
+		printf(ERROR_EXTENSION);
 		exit(1);
 	}
 	printf("\n\nOUT CUB_CHECK_ARGS\n");

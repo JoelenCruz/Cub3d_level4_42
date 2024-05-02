@@ -14,7 +14,6 @@
 #include "cub3d.h"
 
 
-
 void	draw_pixel(t_cub *cub, int x, int y, t_color color)
 {
 	if (x >= 0 && x < WIN_WIDTH && y >= 0 && y < WIN_HEIGHT)
@@ -25,11 +24,11 @@ void	draw_pixel(t_cub *cub, int x, int y, t_color color)
 
 void	load_texture(t_cub *cub, t_img *texture)
 {
-	printf("\n\nIN LOAD_TEXTURE\n");
+	// printf("\n\nIN LOAD_TEXTURE\n");
 	texture->img = mlx_xpm_file_to_image(cub->mlx, texture->path, &texture->width, &texture->height);
-	printf("texture->path: %s\n", texture->path);
-	printf("texture->height: %d\n", texture->height);
-	printf("texture->width: %d\n", texture->width);
+	// printf("texture->path: %s\n", texture->path);
+	// printf("texture->height: %d\n", texture->height);
+	// printf("texture->width: %d\n", texture->width);
 	if (!texture->img)
 	{
 		printf("Error: failed to load texture %s\n", texture->path);
@@ -47,8 +46,8 @@ void	draw_texture(t_cub *cub, t_img *texture, int x, int y)
 
 	printf("\n\nIN DRAW_TEXTURE\n");
 
-	tex_x = (int)(cub->map->width * cub->player.x);
-	tex_y = (int)(cub->map->height * cub->player.y);
+	tex_x = (int)(cub->map->width * cub->p.x);
+	tex_y = (int)(cub->map->height * cub->p.y);
 
 	// Verifica se as coordenadas estão dentro dos limites da janela
 	if (x >= 0 && x < WIN_WIDTH && y >= 0 && y < WIN_HEIGHT)
@@ -74,8 +73,6 @@ void	render_textures(t_cub *cub)
 	load_texture(cub, &(cub->texture.east));
 	load_texture(cub, &(cub->texture.west));
 
-	printf("chegamos aqui !\n");
-
 	// Desenha as texturas na tela
 	draw_texture(cub, &(cub->texture.north), 0, 0);
 	draw_texture(cub, &(cub->texture.south), 0, WIN_HEIGHT / 2);
@@ -97,8 +94,7 @@ void render_frame(t_cub *cub)
 	int	x;
 
 	y = 0;
-	// Preenche a metade superior da tela com a cor do teto
-	while (y < WIN_HEIGHT / 2)
+	while (y < WIN_HEIGHT / 2)	// Preenche a metade superior da tela com a cor do teto
 	{
 		x = 0;
 		while (x < WIN_WIDTH)
@@ -108,9 +104,7 @@ void render_frame(t_cub *cub)
 		}
 		y++;
 	}
-
-	// Preenche a metade inferior da tela com a cor do chão
-	y = WIN_HEIGHT / 2;
+	y = WIN_HEIGHT / 2;	// Preenche a metade inferior da tela com a cor do chão
 	while (y < WIN_HEIGHT)
 	{
 		x = 0;
@@ -122,4 +116,16 @@ void render_frame(t_cub *cub)
 		y++;
 	}
 	render_textures(cub);
+	mlx_hook(cub->win, 2, (1L << 0), button_down, cub);
+	mlx_hook(cub->win, 3, (1L << 1), button_up, cub);
+	mlx_hook(cub->win, 17, 0, cub_close, cub);
+	
 }
+
+// void	cub_mlx_init(t_cub *cub)
+// {
+// 	render_frame(cub);
+// 	mlx_hook(cub->win, 2, (1L << 0), button_down, cub);
+// 	mlx_hook(cub->win, 3, (1L << 1), button_up, cub);
+	
+// }
