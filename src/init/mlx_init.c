@@ -6,7 +6,7 @@
 /*   By: joe <joe@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 11:22:44 by joe               #+#    #+#             */
-/*   Updated: 2024/04/06 13:45:42 by joe              ###   ########.fr       */
+/*   Updated: 2024/06/02 16:25:04 by joe              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,45 +87,3 @@ void	render_textures(t_cub *cub)
 
 	printf("\n\nOUT RENDER_TEXTURES\n");
 }
-
-void render_frame(t_cub *cub)
-{
-	int	y;
-	int	x;
-
-	y = 0;
-	while (y < WIN_HEIGHT / 2)	// Preenche a metade superior da tela com a cor do teto
-	{
-		x = 0;
-		while (x < WIN_WIDTH)
-		{
-			draw_pixel(cub, x, y, cub->img.ceiling_color);
-			x++;
-		}
-		y++;
-	}
-	y = WIN_HEIGHT / 2;	// Preenche a metade inferior da tela com a cor do chão
-	while (y < WIN_HEIGHT)
-	{
-		x = 0;
-		while (x < WIN_WIDTH)
-		{
-			draw_pixel(cub, x, y, cub->img.floor_color);
-			x++;
-		}
-		y++;
-	}
-	render_textures(cub);
-	mlx_hook(cub->win, 2, (1L << 0), button_down, cub);
-	mlx_hook(cub->win, 3, (1L << 1), button_up, cub);
-	mlx_hook(cub->win, 17, 0, cub_close, cub);
-	
-}
-
-// void	cub_mlx_init(t_cub *cub)
-// {
-// 	render_frame(cub);
-// 	mlx_hook(cub->win, 2, (1L << 0), button_down, cub);
-// 	mlx_hook(cub->win, 3, (1L << 1), button_up, cub);
-	
-// }

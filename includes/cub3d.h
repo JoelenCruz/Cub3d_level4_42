@@ -6,7 +6,7 @@
 /*   By: joe <joe@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 20:10:34 by everton           #+#    #+#             */
-/*   Updated: 2024/04/06 14:03:54 by joe              ###   ########.fr       */
+/*   Updated: 2024/06/02 16:55:13 by joe              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # include <errno.h>
 # include <limits.h>
 # include <stdbool.h>
-# include "../minilibx_linux/mlx.h"
+# include "../minilibx-linux/mlx.h"
 # include "../libft/libft.h"
 
 /* -------------------------------------------------------------------------- */
@@ -127,6 +127,7 @@ typedef struct s_img
 {
 	void	*img;
 	void	*info;
+	void	*addr;
 	char	*path;
 	int		*data;
 	int		bpp;
@@ -183,7 +184,7 @@ typedef struct s_cub
 
 
 /* -------------------------------------------------------------------------- */
-/* main                                                              */
+/* draw_background.c                                                             */
 /* -------------------------------------------------------------------------- */
 
 int	is_surrounded_walls(t_cub *cub);
@@ -206,7 +207,7 @@ void	cub_check_args(int argc, char **argv);
 /* ------------------------------------------------------------------------- */
 
 void	set_zero(t_cub *cub);
-void	read_cub_map_file(t_cub *cub);
+void	parse_map_file_lines(t_cub *cub);
 void	cub_init(t_cub *cub, char *file);
 
 
@@ -218,8 +219,8 @@ void	cub_init(t_cub *cub, char *file);
 void	draw_pixel(t_cub *cub, int x, int y, t_color color);
 void	load_texture(t_cub *cub, t_img *texture);
 void	render_textures(t_cub *cub);
-void 	render_frame(t_cub *cub);
-//void	cub_mlx_init(t_cub *cub);
+void 	draw_background(t_cub *cub);
+void	cub_mlx_init(t_cub *cub);
 
 
 
@@ -282,5 +283,10 @@ int	button_up(int key_code, t_cub *cub);
 
 void	check_keys(t_cub *cub);
 
+/* ------------------------------------------------------------------------- */
+/* cub_run                                                      		 */
+/* ------------------------------------------------------------------------- */
+
+void	cub_run(t_cub *cub);
 
 #endif

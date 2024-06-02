@@ -6,7 +6,7 @@
 #    By: joe <joe@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/06 12:38:00 by joe               #+#    #+#              #
-#    Updated: 2024/04/06 13:56:45 by joe              ###   ########.fr        #
+#    Updated: 2024/06/02 15:39:29 by joe              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,8 @@ SRC			 = main.c \
 			   cub_free.c \
 			   actions.c \
 			   movement.c \
+			   draw_background.c \
+			   cub_run.c \
 
 
 
