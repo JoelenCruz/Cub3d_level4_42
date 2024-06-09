@@ -13,26 +13,12 @@
 
 #include "cub3d.h"
 
-// void	cub_start(t_cub *cub)
-// {
-// 	//cub->img.img = mlx_new_image(cub->mlx, WIN_WIDTH, WIN_HEIGHT);
-	
-// 	if (!cub->win)
-// 	{
-// 		printf("Error: mlx_new_window failed\n");
-// 		exit(EXIT_FAILURE);
-// 	}
-// 	//draw_background(cub);
-	
-	
-// 	//mlx_loop(cub->mlx);
-// }
-
 static int	render(t_cub *cub)
 {
 	check_keys (cub);
 	draw_background(cub);
 	raycast (cub);
+	//render_mini_map(cub);
 	mlx_put_image_to_window (cub -> mlx, cub -> win, cub -> img.info, 0, 0);
 	return (0);
 }
@@ -41,7 +27,9 @@ static int	render(t_cub *cub)
 void	cub_run(t_cub *cub)
 {
 	printf("cub_run");
-
+	
 	mlx_loop_hook (cub -> mlx, render, cub);
+	
 	mlx_loop(cub -> mlx);
+	
 }

@@ -6,12 +6,25 @@
 /*   By: joe <joe@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 14:23:54 by joe               #+#    #+#             */
-/*   Updated: 2024/06/09 16:47:00 by joe              ###   ########.fr       */
+/*   Updated: 2024/06/09 17:48:25 by joe              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "cub3d.h"
+
+/**
+ * @brief 
+ * A função get_map() adiciona uma linha do mapa à estrutura t_cub, 
+ * atualizando a altura e largura do mapa conforme necessário.
+ * 
+ * @param cub Um ponteiro para a estrutura t_cub que 
+ * contém as informações do mapa.
+ * @param line A linha do mapa a ser adicionada.
+ * 
+ * @return Sempre retorna 1, indicando que o processamento do mapa 
+ * começou ou continua.
+ */
 
 int	get_map(t_cub *cub, char *line)
 {
@@ -37,6 +50,18 @@ int	get_map(t_cub *cub, char *line)
 }
 
 
+/**
+ * @brief 
+ * A função get_color() converte uma string que representa 
+ * uma cor no formato "R,G,B" 
+ * em um valor inteiro, preenchendo o valor no ponteiro fornecido.
+ * 
+ * @param color Um ponteiro para o inteiro que armazenará a cor 
+ * resultante no formato 0xRRGGBB.
+ * @param line A linha contendo a definição da cor no formato "R,G,B".
+ * 
+ * @return Um inteiro indicando sucesso (1) ou falha (-1) no processamento da cor.
+ */
 static int	get_color(int *color, char *line)
 {
 	t_get_color	c;
@@ -63,6 +88,17 @@ static int	get_color(int *color, char *line)
 	return (c.ret);
 }
 
+/**
+ * @brief 
+ * A função set_data() processa uma linha do arquivo de descrição da cena 
+ * e preenche a estrutura t_cub com as informações apropriadas.
+ * 
+ * @param cub Um ponteiro para a estrutura t_cub que será preenchida 
+ * com os dados da cena.
+ * @param line A linha de dados a ser processada.
+ * 
+ * @return Um inteiro indicando sucesso (0) ou falha (número positivo indicando o erro).
+ */
 static int	set_data(t_cub *cub, char *line)
 {
 	size_t		len;
@@ -90,6 +126,16 @@ static int	set_data(t_cub *cub, char *line)
 	return (ret);
 }
 
+/**
+ * @brief 
+ * A função get_scene_description_data() lê os dados da cena a partir do arquivo de descrição 
+ * e preenche a estrutura t_cub com essas informações.
+ * 
+ * @param cub Um ponteiro para a estrutura t_cub que contém o nome do 
+ * arquivo de descrição da cena e onde os dados serão armazenados.
+ * 
+ * @return Esta função não retorna um valor.
+ */
 void	get_scene_description_data(t_cub *cub)
 {
 	char	*line;

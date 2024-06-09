@@ -6,7 +6,7 @@
 /*   By: joe <joe@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 11:18:39 by joe               #+#    #+#             */
-/*   Updated: 2024/06/09 14:36:39 by joe              ###   ########.fr       */
+/*   Updated: 2024/06/09 17:24:34 by joe              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,38 +112,3 @@ void	check_map(t_cub *cub)
 		y++;
 	}
 }
-
-
-/**
- * @brief
- * A função cub_check_args() verifica se o número correto de argumentos foi 
- * passado ao programa e se o argumento fornecido possui a extensão ".cub".
- * Se o número de argumentos não for 2 ou se a extensão do arquivo não for ".cub",
- * a função imprime uma mensagem de erro apropriada e termina o programa.
- *
- * @param
- * - argc: o número de argumentos passados ao programa.
- * @param
- * - argv: uma matriz de strings contendo os argumentos passados ao programa.
- *
- * @return
- * Esta função não retorna um valor.
- *
-*/
-void	cub_check_args(int argc, char **argv)
-{
-			printf("\n\nIN CUB_CHECK_ARGS\n");
-
-	if (argc != 2)
-	{
-		printf(ERROR_NUMB_ARG);
-		exit(1);
-	}
-	if (ft_strncmp(argv[1] + ft_strlen(argv[1]) - 4, ".cub", 4))
-	{
-		printf(ERROR_EXTENSION);
-		exit(1);
-	}
-			printf("\n\nOUT CUB_CHECK_ARGS\n");
-}
-

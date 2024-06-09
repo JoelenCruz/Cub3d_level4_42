@@ -6,7 +6,7 @@
 /*   By: joe <joe@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 20:10:34 by everton           #+#    #+#             */
-/*   Updated: 2024/06/09 17:21:37 by joe              ###   ########.fr       */
+/*   Updated: 2024/06/09 20:02:30 by joe              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,6 @@
 # define WIN_NAME "Cub3d"
 # define WIN_WIDTH 960
 # define WIN_HEIGHT 600
-
-
-
 
 
 # define ESC_KEY 65307
@@ -71,7 +68,6 @@
 /* -------------------------------------------------------------------------- */
 /* MACROS                                                                */
 /* -------------------------------------------------------------------------- */
-
 # define ERROR_NUMB_ARG "Error\nInvalid number of arguments.\n"
 # define ERROR_EXTENSION "Error\nInvalid file extension.\n"
 # define ERROR_MEMORY "Error:\nMemory allocation failed\n"
@@ -79,6 +75,7 @@
 # define ERROR_RGB "Error:\n RGB values out of range (0-255)\n"
 # define ERROR_MSG "\033[1;31mError\n\033[0m"
 # define EXIT_MSG "\033[1;31mTO EXIT CUB3D!\n\033[0m"
+
 /* -------------------------------------------------------------------------- */
 /* STRUCTURES                                                                 */
 /* -------------------------------------------------------------------------- */
@@ -89,6 +86,14 @@ typedef struct s_coord
 	int	y;
 }	t_coord;
 
+typedef struct s_minimapa
+{
+    void *img;
+    char *addr;
+    int bits_per_pixel;
+    int line_length;
+    int endian;
+} t_minimapa;
 
 typedef struct s_get_color
 {
@@ -202,6 +207,7 @@ typedef struct s_cub
 	t_player	p;
 	t_keys		keys;
 	t_color		colors;
+	t_minimapa	minimapa;
 }	t_cub;
 
 
@@ -212,7 +218,6 @@ typedef struct s_cub
 /* -------------------------------------------------------------------------- */
 
 int	is_surrounded_walls(t_cub *cub);
-//void	get_direction(t_cub *cub, size_t x, size_t y);
 void	cub_start(t_cub *cub);
 
 
@@ -220,8 +225,6 @@ void	cub_start(t_cub *cub);
 /* ------------------------------------------------------------------------- */
 /* check_map                                                          		 */
 /* ------------------------------------------------------------------------- */
-
-//void	read_map_file(t_cub *cub, char *filename);
 void	cub_check_args(int argc, char **argv);
 
 void	check_map(t_cub *cub);
@@ -231,7 +234,6 @@ void	check_map(t_cub *cub);
 /* ------------------------------------------------------------------------- */
 
 void	set_zero(t_cub *cub);
-//void	parse_map_file_lines(t_cub *cub);
 void	cub_init(t_cub *cub, char **argv);
 
 
@@ -270,7 +272,6 @@ void	get_scene_description_data(t_cub *cub);
 /* ------------------------------------------------------------------------- */
 
 int	is_empty_or_spaces(char *str);
-//int	check_chars(t_cub *cub);
 void	get_player_info(t_cub *cub);
 void	print_read_map_file(t_cub *cub);
 
@@ -293,9 +294,6 @@ void	free_memory(t_cub *cub);
 
 int	cub_close(t_cub *cub);
 void	cub_exit(t_cub *cub, const char *msg, const int code);
-
-
-//void	print_read_map_file(t_cub *cub);
 
 
 /* ------------------------------------------------------------------------- */
@@ -336,5 +334,8 @@ void	draw_3d_walls(t_cub *cub, t_raycast *rc);
 
 void	draw_rectangle(t_cub *cub, t_coord start, t_coord end, int color);
 float	dist(float ax, float ay, float bx, float by);
+
+
+void render_mini_map(t_cub *cub);
 
 #endif
