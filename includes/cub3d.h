@@ -6,7 +6,7 @@
 /*   By: joe <joe@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 20:10:34 by everton           #+#    #+#             */
-/*   Updated: 2024/06/09 17:09:33 by joe              ###   ########.fr       */
+/*   Updated: 2024/06/09 17:21:37 by joe              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,21 +33,10 @@
 /* DEFINES                                                                    */
 /* -------------------------------------------------------------------------- */
 # define WIN_NAME "Cub3d"
-# define WIN_WIDTH 800
+# define WIN_WIDTH 960
 # define WIN_HEIGHT 600
 
-# define FOV 60
-# define TILE_SIZE 64
-# define MOVE_SPEED 0.1
-# define ROTATE_SPEED 0.05
-# define NORTH 0
-# define SOUTH 1
-# define EAST 2
-# define WEST 3
-# define WALL 1
-# define SPRITE 2
-# define EMPTY 0
-# define PLAYER 3
+
 
 
 
@@ -66,26 +55,18 @@
 # define PI 3.1415
 # define DR 0.0174533
 
+
+# define FOV 60
 # define MAX_DIST 1000000000
 # define MAX_RAYS 480
 # define RAY_HORIZONTAL_SIZE 16
 # define FOV 60
 # define WALL_HEIGHT 700
-
 # define PRECISION_DOWN 0.00001
 # define PRECISION_UP 1
-
 # define STEPS 0.25
 # define TURN_ANG 0.07
 
-
-// # define KEY_ESC 53
-// # define KEY_W 13
-// # define KEY_A 0
-// # define KEY_S 1
-// # define KEY_D 2
-// # define KEY_LEFT 123
-// # define KEY_RIGHT 124
 
 /* -------------------------------------------------------------------------- */
 /* MACROS                                                                */
