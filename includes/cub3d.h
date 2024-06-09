@@ -6,7 +6,7 @@
 /*   By: joe <joe@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 20:10:34 by everton           #+#    #+#             */
-/*   Updated: 2024/06/02 16:55:13 by joe              ###   ########.fr       */
+/*   Updated: 2024/06/09 17:09:33 by joe              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,22 @@
 /* STRUCTURES                                                                 */
 /* -------------------------------------------------------------------------- */
 
+typedef struct s_coord
+{
+	int	x;
+	int	y;
+}	t_coord;
+
+
+typedef struct s_get_color
+{
+	size_t	start;
+	char	*temp[3];
+	size_t	len;
+	int		ret;
+}			t_get_color;
+
+
 typedef struct s_keys
 {
 	int	esc;
@@ -118,9 +134,8 @@ typedef struct s_keys
 
 typedef struct s_color
 {
-	int	r;
-	int	g;
-	int	b;
+	int	floor;
+	int	ceiling;
 }	t_color;
 
 typedef struct s_img
@@ -135,17 +150,20 @@ typedef struct s_img
 	int		endian;
 	int		height;
 	int		width;
-	t_color	floor_color;
-	t_color	ceiling_color;
-	t_color	color;
 }	t_img;
 
 typedef struct s_texture
 {
-	t_img	north;
-	t_img	south;
-	t_img	east;
-	t_img	west;
+	int		height;
+	int		width;
+	char	*north_file;
+	char	*south_file;
+	char	*west_file;
+	char	*east_file;
+	void	*north_image;
+	void	*south_image;
+	void	*west_image;
+	void	*east_image;
 }	t_texture;
 
 typedef struct s_player
@@ -160,24 +178,49 @@ typedef struct s_player
 	int		direction;
 }			t_player;
 
-typedef struct s_map
+typedef struct s_raycast
 {
-	char	**map_file;
-	char	**map_lines;
-	int		start_map;
-	size_t	width;
-	size_t	height;
-}	t_map;
+	int		deep_of_field;
+	int		deep_of_field_max;
+	void	*texture;
+	int		texture_x;
+	int		texture_y;
+	int		color;
+	int		ray;
+	float	ray_x;
+	float	ray_y;
+	float	ray_angle;
+	float	ray_x_offset;
+	float	ray_y_offset;
+	int		ray_horizontal_size;
+	float	distance;
+	float	distance_horizontal;
+	float	horizontal_x;
+	float	horizontal_y;
+	float	horizontal_tan;
+	float	distance_vertical;
+	float	vertical_x;
+	float	vertical_y;
+	float	vertical_tan;
+	int		vertical_line;
+	float	cast_angle;
+	int		line_off;
+	int		line_y;
+}	t_raycast;
 
 typedef struct s_cub
 {
 	void		*mlx;
 	void		*win;
+	char		*scene_description;
+	char		**scene_map;
+	int			map_height;
+	int			map_width;
 	t_img		img;
 	t_texture	texture;
 	t_player	p;
-	t_map		*map;
 	t_keys		keys;
+	t_color		colors;
 }	t_cub;
 
 
@@ -188,7 +231,7 @@ typedef struct s_cub
 /* -------------------------------------------------------------------------- */
 
 int	is_surrounded_walls(t_cub *cub);
-void	get_direction(t_cub *cub, size_t x, size_t y);
+//void	get_direction(t_cub *cub, size_t x, size_t y);
 void	cub_start(t_cub *cub);
 
 
@@ -197,26 +240,25 @@ void	cub_start(t_cub *cub);
 /* check_map                                                          		 */
 /* ------------------------------------------------------------------------- */
 
-void	read_map_file(t_cub *cub, char *filename);
+//void	read_map_file(t_cub *cub, char *filename);
 void	cub_check_args(int argc, char **argv);
 
-
+void	check_map(t_cub *cub);
 
 /* ------------------------------------------------------------------------- */
 /* cub_init                                                          		 */
 /* ------------------------------------------------------------------------- */
 
 void	set_zero(t_cub *cub);
-void	parse_map_file_lines(t_cub *cub);
-void	cub_init(t_cub *cub, char *file);
-
+//void	parse_map_file_lines(t_cub *cub);
+void	cub_init(t_cub *cub, char **argv);
 
 
 /* ------------------------------------------------------------------------- */
 /* mlx_init                                                          		 */
 /* ------------------------------------------------------------------------- */
 
-void	draw_pixel(t_cub *cub, int x, int y, t_color color);
+void	draw_pixel(t_img *img, int x, int y, int color);
 void	load_texture(t_cub *cub, t_img *texture);
 void	render_textures(t_cub *cub);
 void 	draw_background(t_cub *cub);
@@ -238,15 +280,21 @@ void	parse_map_line(t_cub *cub, char *str);
 int		parser_cub(t_cub *cub);
 
 
+void	get_scene_description_data(t_cub *cub);
+
+
 
 /* ------------------------------------------------------------------------- */
 /* utils                                                        		 */
 /* ------------------------------------------------------------------------- */
 
 int	is_empty_or_spaces(char *str);
-int	check_chars(t_cub *cub);
+//int	check_chars(t_cub *cub);
 void	get_player_info(t_cub *cub);
 void	print_read_map_file(t_cub *cub);
+
+
+void	format_map(char ***map, size_t map_height, size_t map_width);
 
 
 /* ------------------------------------------------------------------------- */
@@ -288,5 +336,24 @@ void	check_keys(t_cub *cub);
 /* ------------------------------------------------------------------------- */
 
 void	cub_run(t_cub *cub);
+
+/* ------------------------------------------------------------------------- */
+/* raycast                                                      		 */
+/* ------------------------------------------------------------------------- */
+
+void	raycast(t_cub *cub);
+void	reset_params(t_cub *cub, t_raycast *rc);
+void	set_h_rays(t_cub *cub, t_raycast *rc);
+void	set_v_rays(t_cub *cub, t_raycast *rc);
+
+void	h_wall_hit(t_cub *cub, t_raycast *rc, int map_x, int map_y);
+void	v_wall_hit(t_cub *cub, t_raycast *rc, int map_x, int map_y);
+
+void	choose_wall(t_cub *cub, t_raycast *rc);
+void	choose_texture(t_cub *cub, t_raycast *rc);
+void	draw_3d_walls(t_cub *cub, t_raycast *rc);
+
+void	draw_rectangle(t_cub *cub, t_coord start, t_coord end, int color);
+float	dist(float ax, float ay, float bx, float by);
 
 #endif

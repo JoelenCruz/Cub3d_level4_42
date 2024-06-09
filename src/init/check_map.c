@@ -6,66 +6,113 @@
 /*   By: joe <joe@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 11:18:39 by joe               #+#    #+#             */
-/*   Updated: 2024/06/02 14:33:15 by joe              ###   ########.fr       */
+/*   Updated: 2024/06/09 14:36:39 by joe              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-
-/**
- * @brief Leitura de um arquivo de mapa linha por linha.A função read_map_file() 
- * abre e lê um arquivo de mapa especificado por
- * filename, linha por linha. Linhas que não são vazias ou que não são compostas
- * apenas por espaços são armazenadas no membro map_file da estrutura cub->map.
- * Em caso de falha ao abrir o arquivo ou alocar memória, a função imprime uma
- * mensagem de erro e termina o programa.
- * @param 
- * - cub: um ponteiro para a estrutura t_cub que contém o mapa.
- * @param 
- * - filename: uma string representando o nome do arquivo a ser lido.
- * @return não retorna valor 
- */
-void	read_map_file(t_cub *cub, char *filename)
+static void	check_border(t_cub *cub, char **map, int y)
 {
-	int		fd;
-	char	*line;
-	char	**temp;
-	size_t	i;
+	int	x;
 
-		printf("\n\nIN READ_MAP_FILE\n");
-
-	fd = open(filename, O_RDONLY);
-	if (fd < 0)
+	x = 0;
+	while (x < cub -> map_width)
 	{
-		printf("Error: failed to open file %s\n", filename);
-		exit(EXIT_FAILURE);
-	}
-
-	cub->map->map_file = ft_calloc(1, sizeof(char *));
-	i = 0;
-	while ((line = get_next_line(fd)) != NULL)
-	{
-		if (!is_empty_or_spaces(line) && line[0] != '\n')
+		if (map[y][x] != ' ' && map[y][x] != '1')
+			cub_exit (cub, "Invalid Map.", 7);
+		if (y == 0 && map[y][x] == ' ')
 		{
-			temp = ft_calloc(i + 2, sizeof(char *)); // Aloca um novo array temporário
-			if (!temp)
-			{
-				printf(ERROR_MEMORY);
-				exit(EXIT_FAILURE);
-			}
-			ft_memcpy(temp, cub->map->map_file, i * sizeof(char *)); // Copia os ponteiros existentes
-			free(cub->map->map_file); // Libera a memória alocada anteriormente
-			cub->map->map_file = temp; // Atribui o novo array
-			cub->map->map_file[i] = ft_strdup(line); // Aloca e copia a linha atual
-			i++;
+			if (map[1][x] != ' ' && map[1][x] != '1')
+				cub_exit (cub, "Invalid Map.", 8);
 		}
-		free(line);
+		else if (y == cub -> map_height - 1 && map[y][x] == ' ')
+		{
+			if (map[y - 1][x] != ' ' && map[y - 1][x] != '1')
+				cub_exit (cub, "Invalid Map.", 9);
+		}		
+		x++;
 	}
-	close(fd);
-
-		printf("\n\nOUT READ_MAP_FILE\n");
 }
+
+static void	check_arround_middle(t_cub *cub, int y, int x, char **map)
+{
+	if (x == 0 && map[y][x] == ' ')
+	{
+		if ((map[y][x + 1] != ' ' && map[y][x + 1] != '1') || \
+		(map[y - 1][x] != ' ' && map[y - 1][x] != '1') || \
+		(map[y + 1][x] != ' ' && map[y + 1][x] != '1'))
+			cub_exit (cub, "Invalid Map.", 4);
+	}
+	else if (x == cub -> map_width - 1 && map[y][x] == ' ')
+	{
+		if (((map[y][x - 1] != ' ' && map[y][x - 1] != '1') || \
+		(map[y - 1][x] != ' ' && map[y - 1][x] != '1') || \
+		(map[y + 1][x] != ' ' && map[y + 1][x] != '1')))
+			cub_exit (cub, "Invalid Map.", 5);
+	}
+	else if (map[y][x] == ' ')
+	{
+		if (((map[y][x - 1] != ' ' && map[y][x - 1] != '1') || \
+		(map[y][x + 1] != ' ' && map[y][x + 1] != '1') || \
+		(map[y - 1][x] != ' ' && map[y - 1][x] != '1') || \
+		(map[y + 1][x] != ' ' && map[y + 1][x] != '1')))
+			cub_exit (cub, "Invalid Map.", 6);
+	}
+}
+
+static void	check_middle(t_cub *cub, char **map, int y)
+{
+	int	x;
+
+	x = 0;
+	while (x < cub -> map_width)
+	{
+		if (x == 0 || x == cub -> map_width - 1)
+		{
+			if (map[y][x] != ' ' && map[y][x] != '1')
+				cub_exit (cub, "Invalid Map.", 3);
+		}
+		check_arround_middle(cub, y, x, map);
+		x++;
+	}
+}
+
+static void	check_characters(t_cub *cub, char **map)
+{
+	int	y;
+	int	x;
+
+	y = 0;
+	while (y < cub -> map_height)
+	{
+		x = 0;
+		while (x < cub -> map_width)
+		{
+			if (!ft_strchr("NSEW01 ", map[y][x]))
+				cub_exit (cub, "Invalid Map.", 1);
+			x++;
+		}
+		y++;
+	}
+}
+
+void	check_map(t_cub *cub)
+{
+	int	y;
+
+	y = 0;
+	check_characters(cub, cub -> scene_map);
+	while (cub -> scene_map[y])
+	{
+		if (y == 0 || y == cub -> map_height - 1)
+			check_border(cub, cub -> scene_map, y);
+		else
+			check_middle(cub, cub -> scene_map, y);
+		y++;
+	}
+}
+
 
 /**
  * @brief
@@ -99,3 +146,4 @@ void	cub_check_args(int argc, char **argv)
 	}
 			printf("\n\nOUT CUB_CHECK_ARGS\n");
 }
+

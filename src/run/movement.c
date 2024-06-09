@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub_init.c                                         :+:      :+:    :+:   */
+/*   movement.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: joe <joe@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 11:21:30 by joe               #+#    #+#             */
-/*   Updated: 2024/04/06 13:45:48 by joe              ###   ########.fr       */
+/*   Updated: 2024/06/09 14:13:30 by joe              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,15 @@ static void	player_move(t_cub *cub, double new_x, double new_y)
 
 	x_forward = (int)(cub -> p.x + (new_x * 8) * STEPS);
 	y_forward = (int)(cub -> p.y + (new_y * 8) * STEPS);
-	if (cub->map->map_lines[(int)cub -> p.y][x_forward] != '1')
+	if (cub -> scene_map[(int)cub -> p.y][x_forward] != '1')
 	{
 		cub -> p.x += new_x * STEPS;
-		cub -> p.col_x = x_forward * (WIN_WIDTH / cub -> img.width);
+		cub -> p.col_x = x_forward * (WIN_WIDTH / cub -> map_width);
 	}
-	if (cub->map->map_lines[y_forward][(int)cub -> p.x] != '1')
+	if (cub -> scene_map[y_forward][(int)cub -> p.x] != '1')
 	{
 		cub -> p.y += new_y * STEPS;
-		cub -> p.col_y = y_forward * (WIN_HEIGHT / cub -> img.height);
+		cub -> p.col_y = y_forward * (WIN_HEIGHT / cub -> map_height);
 	}
 }
 

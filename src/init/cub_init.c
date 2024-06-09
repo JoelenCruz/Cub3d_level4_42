@@ -6,7 +6,7 @@
 /*   By: joe <joe@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 11:21:30 by joe               #+#    #+#             */
-/*   Updated: 2024/06/02 17:37:21 by joe              ###   ########.fr       */
+/*   Updated: 2024/06/09 14:36:55 by joe              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,22 @@
  */
 static void	cub_bzero(t_cub *cub)
 {
-	cub->map = ft_calloc(1, sizeof(t_map));
-	if (!cub->map)
-	{
-		printf(ERROR_MEMORY);
-		exit(EXIT_FAILURE);
-	}
-	ft_bzero (&cub -> mlx, sizeof (void));
-	ft_bzero (&cub -> win, sizeof (void));
+	ft_bzero (cub, sizeof (t_cub));
 	ft_bzero (&cub -> img, sizeof (t_img));
 	ft_bzero (&cub -> texture, sizeof (t_texture));
 	ft_bzero (&cub -> p, sizeof(t_player));
+	ft_bzero (&cub -> colors, sizeof (t_color));
 }
 
+static void	get_scene_description_file_name(char *map_name, t_cub *cub)
+{
+	char	*extension_start;
+
+	cub -> scene_description = map_name;
+	extension_start = ft_strrchr (cub -> scene_description, '.');
+	if (ft_strncmp (extension_start, ".cub", ft_strlen (".cub") + 1))
+		cub_exit (cub, "Invalid scene description file extension.", 1);
+}
 
 /**
  * @brief 
@@ -49,35 +52,29 @@ static void	cub_bzero(t_cub *cub)
  * 
  * @return Esta função não retorna um valor.
  */
-
-void	cub_init(t_cub *cub, char *file)
+void	cub_init(t_cub *cub, char **argv)
 {
-			printf("\n\nIN CUB_INIT\n");
+	printf("\n\nIN CUB_INIT\n");
 	
 	cub_bzero(cub);
-	read_map_file(cub, file);
-	if (parser_cub(cub))
-	{
-		printf(ERROR_INVALID_MAP);
-		exit(EXIT_FAILURE);
-	}
 	
-	get_player_info(cub);
-			printf("player.x: %f\n", cub->p.x);
-			printf("player.y: %f\n", cub->p.y);
-			printf("player.dir: %f\n", cub->p.ang);
-			printf("player.dir_x: %f\n", cub->p.dx);
-			printf("player.dir_y: %f\n", cub->p.y);
+	get_scene_description_file_name (argv[1], cub);
+	
+	get_scene_description_data(cub);
+	
+	
+	format_map (&cub -> scene_map, cub -> map_height, cub -> map_width);
+	cub -> map_width--;
 
-	// if (!cub->map->map_lines || !cub->player.x || !cub->player.y || !cub->player.dir || !cub->player.dir_x || !cub->player.dir_y)
-	// {
-	// 	printf("Error\nInvalid map\n");
-	// 	exit(1);
-	// }
 
-			printf("cub->texture.north.path: %s\n", cub->texture.north.path);
-			printf("cub->texture.north.height: %d\n", cub->texture.north.height);
-			printf("cub->texture.north.width: %d\n", cub->texture.north.width);
+	get_player_info (cub);
+	if (!cub->scene_map || !(int)cub -> p.y || !cub -> p.x)
+		cub_exit (cub, "Invalid scene information.", 1);
 
+	
 			printf("\n\nOUT CUB_INIT\n");
+	
+	check_map(cub);
+	cub_mlx_init(cub);
+	printf("entrei aqui");
 }

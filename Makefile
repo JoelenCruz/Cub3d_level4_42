@@ -6,7 +6,7 @@
 #    By: joe <joe@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/06 12:38:00 by joe               #+#    #+#              #
-#    Updated: 2024/06/02 15:39:29 by joe              ###   ########.fr        #
+#    Updated: 2024/06/09 17:01:40 by joe              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,11 @@ SRC			 = main.c \
 			   movement.c \
 			   draw_background.c \
 			   cub_run.c \
+			   raycast_utils.c \
+			   raycast.c \
+			   draw_rectangle.c \
+			   draw_3d_scene.c \
+			   math.c \
 
 
 
