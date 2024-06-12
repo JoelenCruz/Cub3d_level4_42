@@ -6,7 +6,7 @@
 /*   By: joe <joe@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 20:10:34 by everton           #+#    #+#             */
-/*   Updated: 2024/04/06 14:03:54 by joe              ###   ########.fr       */
+/*   Updated: 2024/06/09 20:02:30 by joe              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,29 +26,15 @@
 # include <errno.h>
 # include <limits.h>
 # include <stdbool.h>
-# include "../minilibx_linux/mlx.h"
+# include "../minilibx-linux/mlx.h"
 # include "../libft/libft.h"
 
 /* -------------------------------------------------------------------------- */
 /* DEFINES                                                                    */
 /* -------------------------------------------------------------------------- */
 # define WIN_NAME "Cub3d"
-# define WIN_WIDTH 800
+# define WIN_WIDTH 960
 # define WIN_HEIGHT 600
-
-# define FOV 60
-# define TILE_SIZE 64
-# define MOVE_SPEED 0.1
-# define ROTATE_SPEED 0.05
-# define NORTH 0
-# define SOUTH 1
-# define EAST 2
-# define WEST 3
-# define WALL 1
-# define SPRITE 2
-# define EMPTY 0
-# define PLAYER 3
-
 
 
 # define ESC_KEY 65307
@@ -66,31 +52,22 @@
 # define PI 3.1415
 # define DR 0.0174533
 
+
+# define FOV 60
 # define MAX_DIST 1000000000
 # define MAX_RAYS 480
 # define RAY_HORIZONTAL_SIZE 16
 # define FOV 60
 # define WALL_HEIGHT 700
-
 # define PRECISION_DOWN 0.00001
 # define PRECISION_UP 1
-
 # define STEPS 0.25
 # define TURN_ANG 0.07
 
 
-// # define KEY_ESC 53
-// # define KEY_W 13
-// # define KEY_A 0
-// # define KEY_S 1
-// # define KEY_D 2
-// # define KEY_LEFT 123
-// # define KEY_RIGHT 124
-
 /* -------------------------------------------------------------------------- */
 /* MACROS                                                                */
 /* -------------------------------------------------------------------------- */
-
 # define ERROR_NUMB_ARG "Error\nInvalid number of arguments.\n"
 # define ERROR_EXTENSION "Error\nInvalid file extension.\n"
 # define ERROR_MEMORY "Error:\nMemory allocation failed\n"
@@ -98,9 +75,34 @@
 # define ERROR_RGB "Error:\n RGB values out of range (0-255)\n"
 # define ERROR_MSG "\033[1;31mError\n\033[0m"
 # define EXIT_MSG "\033[1;31mTO EXIT CUB3D!\n\033[0m"
+
 /* -------------------------------------------------------------------------- */
 /* STRUCTURES                                                                 */
 /* -------------------------------------------------------------------------- */
+
+typedef struct s_coord
+{
+	int	x;
+	int	y;
+}	t_coord;
+
+typedef struct s_minimapa
+{
+    void *img;
+    char *addr;
+    int bits_per_pixel;
+    int line_length;
+    int endian;
+} t_minimapa;
+
+typedef struct s_get_color
+{
+	size_t	start;
+	char	*temp[3];
+	size_t	len;
+	int		ret;
+}			t_get_color;
+
 
 typedef struct s_keys
 {
@@ -118,15 +120,15 @@ typedef struct s_keys
 
 typedef struct s_color
 {
-	int	r;
-	int	g;
-	int	b;
+	int	floor;
+	int	ceiling;
 }	t_color;
 
 typedef struct s_img
 {
 	void	*img;
 	void	*info;
+	void	*addr;
 	char	*path;
 	int		*data;
 	int		bpp;
@@ -134,17 +136,20 @@ typedef struct s_img
 	int		endian;
 	int		height;
 	int		width;
-	t_color	floor_color;
-	t_color	ceiling_color;
-	t_color	color;
 }	t_img;
 
 typedef struct s_texture
 {
-	t_img	north;
-	t_img	south;
-	t_img	east;
-	t_img	west;
+	int		height;
+	int		width;
+	char	*north_file;
+	char	*south_file;
+	char	*west_file;
+	char	*east_file;
+	void	*north_image;
+	void	*south_image;
+	void	*west_image;
+	void	*east_image;
 }	t_texture;
 
 typedef struct s_player
@@ -159,35 +164,60 @@ typedef struct s_player
 	int		direction;
 }			t_player;
 
-typedef struct s_map
+typedef struct s_raycast
 {
-	char	**map_file;
-	char	**map_lines;
-	int		start_map;
-	size_t	width;
-	size_t	height;
-}	t_map;
+	int		deep_of_field;
+	int		deep_of_field_max;
+	void	*texture;
+	int		texture_x;
+	int		texture_y;
+	int		color;
+	int		ray;
+	float	ray_x;
+	float	ray_y;
+	float	ray_angle;
+	float	ray_x_offset;
+	float	ray_y_offset;
+	int		ray_horizontal_size;
+	float	distance;
+	float	distance_horizontal;
+	float	horizontal_x;
+	float	horizontal_y;
+	float	horizontal_tan;
+	float	distance_vertical;
+	float	vertical_x;
+	float	vertical_y;
+	float	vertical_tan;
+	int		vertical_line;
+	float	cast_angle;
+	int		line_off;
+	int		line_y;
+}	t_raycast;
 
 typedef struct s_cub
 {
 	void		*mlx;
 	void		*win;
+	char		*scene_description;
+	char		**scene_map;
+	int			map_height;
+	int			map_width;
 	t_img		img;
 	t_texture	texture;
 	t_player	p;
-	t_map		*map;
 	t_keys		keys;
+	t_color		colors;
+	t_minimapa	minimapa;
 }	t_cub;
 
 
 
 
 /* -------------------------------------------------------------------------- */
-/* main                                                              */
+/* draw_background.c                                                             */
 /* -------------------------------------------------------------------------- */
 
 int	is_surrounded_walls(t_cub *cub);
-void	get_direction(t_cub *cub, size_t x, size_t y);
 void	cub_start(t_cub *cub);
 
 
@@ -195,31 +225,27 @@ void	cub_start(t_cub *cub);
 /* ------------------------------------------------------------------------- */
 /* check_map                                                          		 */
 /* ------------------------------------------------------------------------- */
-
-void	read_map_file(t_cub *cub, char *filename);
 void	cub_check_args(int argc, char **argv);
 
-
+void	check_map(t_cub *cub);
 
 /* ------------------------------------------------------------------------- */
 /* cub_init                                                          		 */
 /* ------------------------------------------------------------------------- */
 
 void	set_zero(t_cub *cub);
-void	read_cub_map_file(t_cub *cub);
-void	cub_init(t_cub *cub, char *file);
-
+void	cub_init(t_cub *cub, char **argv);
 
 
 /* ------------------------------------------------------------------------- */
 /* mlx_init                                                          		 */
 /* ------------------------------------------------------------------------- */
 
-void	draw_pixel(t_cub *cub, int x, int y, t_color color);
+void	draw_pixel(t_img *img, int x, int y, int color);
 void	load_texture(t_cub *cub, t_img *texture);
 void	render_textures(t_cub *cub);
-void 	render_frame(t_cub *cub);
-//void	cub_mlx_init(t_cub *cub);
+void 	draw_background(t_cub *cub);
+void	cub_mlx_init(t_cub *cub);
 
 
 
@@ -237,15 +263,20 @@ void	parse_map_line(t_cub *cub, char *str);
 int		parser_cub(t_cub *cub);
 
 
+void	get_scene_description_data(t_cub *cub);
+
+
 
 /* ------------------------------------------------------------------------- */
 /* utils                                                        		 */
 /* ------------------------------------------------------------------------- */
 
 int	is_empty_or_spaces(char *str);
-int	check_chars(t_cub *cub);
 void	get_player_info(t_cub *cub);
 void	print_read_map_file(t_cub *cub);
+
+
+void	format_map(char ***map, size_t map_height, size_t map_width);
 
 
 /* ------------------------------------------------------------------------- */
@@ -265,9 +296,6 @@ int	cub_close(t_cub *cub);
 void	cub_exit(t_cub *cub, const char *msg, const int code);
 
 
-//void	print_read_map_file(t_cub *cub);
-
-
 /* ------------------------------------------------------------------------- */
 /* actions                                                       		 */
 /* ------------------------------------------------------------------------- */
@@ -282,5 +310,32 @@ int	button_up(int key_code, t_cub *cub);
 
 void	check_keys(t_cub *cub);
 
+/* ------------------------------------------------------------------------- */
+/* cub_run                                                      		 */
+/* ------------------------------------------------------------------------- */
+
+void	cub_run(t_cub *cub);
+
+/* ------------------------------------------------------------------------- */
+/* raycast                                                      		 */
+/* ------------------------------------------------------------------------- */
+
+void	raycast(t_cub *cub);
+void	reset_params(t_cub *cub, t_raycast *rc);
+void	set_h_rays(t_cub *cub, t_raycast *rc);
+void	set_v_rays(t_cub *cub, t_raycast *rc);
+
+void	h_wall_hit(t_cub *cub, t_raycast *rc, int map_x, int map_y);
+void	v_wall_hit(t_cub *cub, t_raycast *rc, int map_x, int map_y);
+
+void	choose_wall(t_cub *cub, t_raycast *rc);
+void	choose_texture(t_cub *cub, t_raycast *rc);
+void	draw_3d_walls(t_cub *cub, t_raycast *rc);
+
+void	draw_rectangle(t_cub *cub, t_coord start, t_coord end, int color);
+float	dist(float ax, float ay, float bx, float by);
+
+
+void render_mini_map(t_cub *cub);
 
 #endif

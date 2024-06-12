@@ -1,218 +1,166 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: joe <joe@student.42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/02 14:23:54 by joe               #+#    #+#             */
+/*   Updated: 2024/06/09 17:48:25 by joe              ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+
 #include "cub3d.h"
 
+/**
+ * @brief 
+ * A função get_map() adiciona uma linha do mapa à estrutura t_cub, 
+ * atualizando a altura e largura do mapa conforme necessário.
+ * 
+ * @param cub Um ponteiro para a estrutura t_cub que 
+ * contém as informações do mapa.
+ * @param line A linha do mapa a ser adicionada.
+ * 
+ * @return Sempre retorna 1, indicando que o processamento do mapa 
+ * começou ou continua.
+ */
 
-void	parse_color_line(char *str, t_img *img)
+int	get_map(t_cub *cub, char *line)
 {
-	char	**split;
-	size_t	i;
+	char	**temp;
+	int		i;
 
+	cub -> map_height++;
+	temp = ft_calloc (cub -> map_height + 1, sizeof (char *));
+	if (!temp)
+		cub_exit (cub, "Can't allocate memory.", 1);
 	i = 0;
-	split = ft_split(str, ' ');
-	if (!split)
+	while (cub -> scene_map && cub -> scene_map[i])
 	{
-		printf(ERROR_MEMORY);
-		exit(EXIT_FAILURE);
-	}
-	if (split[0] && split[1] && split[2] && split[3])
-	{
-		if (ft_strnstr(str, "F ", ft_strlen(str)) != NULL)
-		{
-			if (ft_atoi(split[1]) < 0 || ft_atoi(split[1]) > 255 || ft_atoi(split[2]) < 0 || ft_atoi(split[2]) > 255 || ft_atoi(split[3]) < 0 || ft_atoi(split[3]) > 255)
-			{
-				printf("Error: RGB values out of range (0-255)\n");
-				exit(EXIT_FAILURE);
-			}
-			img->floor_color.r = ft_atoi(split[1]);
-			img->floor_color.g = ft_atoi(split[2]);
-			img->floor_color.b = ft_atoi(split[3]);
-		}
-		else if (ft_strnstr(str, "C ", ft_strlen(str)) != NULL)
-		{
-			if (ft_atoi(split[1]) < 0 || ft_atoi(split[1]) > 255 || ft_atoi(split[2]) < 0 || ft_atoi(split[2]) > 255 || ft_atoi(split[3]) < 0 || ft_atoi(split[3]) > 255)
-			{
-				printf("Error: RGB values out of range (0-255)\n");
-				exit(EXIT_FAILURE);
-			}
-			img->ceiling_color.r = ft_atoi(split[1]);
-			img->ceiling_color.g = ft_atoi(split[2]);
-			img->ceiling_color.b = ft_atoi(split[3]);
-		}
-	}
-	while (split[i])
-	{
-		free(split[i]);
+		temp[i] = ft_strdup (cub -> scene_map[i]);
 		i++;
 	}
-	free(split);
-}
-
-int	is_texture_or_color_line(t_cub *cub, char *str)
-{
-	if (ft_strnstr(str, "NO ", ft_strlen(str)) != NULL || ft_strnstr(str, "SO ", ft_strlen(str)) != NULL || ft_strnstr(str, "WE ", ft_strlen(str)) != NULL || ft_strnstr(str, "EA ", ft_strlen(str)) != NULL)
-	{
-		parse_texture_line(str, &(cub->texture));
-		return (1);
-		// printf("i = %i --- NORTH: %s\n", i, cub->texture.north.path);
-		// printf("i = %i --- SOUTH: %s\n", i, cub->texture.south.path);
-		// printf("i = %i --- WEST: %s\n", i, cub->texture.west.path);
-		// printf("i = %i --- EAST: %s\n", i, cub->texture.east.path);
-	}
-	else if (ft_strnstr(str, "F ", ft_strlen(str)) != NULL || ft_strnstr(str, "C ", ft_strlen(str)) != NULL)
-	{
-		parse_color_line(str, &(cub->img));
-		return (1);
-		// printf("i = %i --- FLOOR: %d\n", i, cub->img.floor);
-		// printf("i = %i --- CEILING: %d\n", i, cub->img.ceiling);
-	}
-	return (0);
-}
-
-int	is_texture_or_color(char *str)
-{
-	if (ft_strnstr(str, "NO ", ft_strlen(str)) != NULL || ft_strnstr(str, "SO ", ft_strlen(str)) != NULL || ft_strnstr(str, "WE ", ft_strlen(str)) != NULL || ft_strnstr(str, "EA ", ft_strlen(str)) != NULL || ft_strnstr(str, "F ", ft_strlen(str)) != NULL || ft_strnstr(str, "C ", ft_strlen(str)) != NULL)
-		return (1);
-	return (0);
+	if (cub -> map_width < (int) ft_strlen (line))
+		cub -> map_width = (int) ft_strlen (line);
+	temp[i] = ft_strdup (line);
+	free_mat (&cub -> scene_map);
+	cub -> scene_map = temp;
+	return (1);
 }
 
 
-int	is_map_line(char *str)
+/**
+ * @brief 
+ * A função get_color() converte uma string que representa 
+ * uma cor no formato "R,G,B" 
+ * em um valor inteiro, preenchendo o valor no ponteiro fornecido.
+ * 
+ * @param color Um ponteiro para o inteiro que armazenará a cor 
+ * resultante no formato 0xRRGGBB.
+ * @param line A linha contendo a definição da cor no formato "R,G,B".
+ * 
+ * @return Um inteiro indicando sucesso (1) ou falha (-1) no processamento da cor.
+ */
+static int	get_color(int *color, char *line)
 {
-	while (*str)
-	{
-		if (*str == ' ' || *str == 'N' || *str == 'S' || *str == 'W' || *str == 'E' || *str == '1' || *str == '0')
-			return (1);
-		str++;
-	}
-	return (0);
+	t_get_color	c;
+
+	ft_bzero (&c, sizeof (t_get_color));
+	c.ret = 1;
+	c.start = 2;
+	c.len = ft_strchr (line + c.start, ',') - line - c.start;
+	c.temp[0] = ft_substr (line, c.start, c.len);
+	*color = ft_atoi (c.temp[0]) << 16;
+	c.start += c.len + 1;
+	c.len = ft_strchr (line + c.start, ',') - line - c.start;
+	c.temp[1] = ft_substr (line, c.start, c.len);
+	*color |= ((unsigned char) ft_atoi (c.temp[1])) << 8;
+	c.start += c.len + 1;
+	c.len = ft_strchr (line + c.start, '\0') - line - c.start;
+	c.temp[2] = ft_substr (line, c.start, c.len);
+	*color |= ((unsigned char) ft_atoi (c.temp[2]));
+	if (!c.temp[0] || !c.temp[1] || !c.temp[2])
+		c.ret = -1;
+	free_ptr (&c.temp[0]);
+	free_ptr (&c.temp[1]);
+	free_ptr (&c.temp[2]);
+	return (c.ret);
 }
 
-void	print_read_map_lines(t_cub *cub)
+/**
+ * @brief 
+ * A função set_data() processa uma linha do arquivo de descrição da cena 
+ * e preenche a estrutura t_cub com as informações apropriadas.
+ * 
+ * @param cub Um ponteiro para a estrutura t_cub que será preenchida 
+ * com os dados da cena.
+ * @param line A linha de dados a ser processada.
+ * 
+ * @return Um inteiro indicando sucesso (0) ou falha (número positivo indicando o erro).
+ */
+static int	set_data(t_cub *cub, char *line)
 {
-	size_t	i;
+	size_t		len;
+	int			ret;
+	static int	start;
 
-	// printf("\n\nIN PRINT_READ_MAP_LINES\n");
-
-	i = 0;
-	// printf("cub->map->height: %li\n", cub->map->height);
-	while (i < cub->map->height)
-	{
-		printf("cub->map->map_lines[%li]: %s\n", i, cub->map->map_lines[i]);
-		i++;
-	}
-	// printf("\n\nOUT PRINT_READ_MAP_LINES\n");
+	len = 0;
+	ret = 0;
+	while (line[len] && line[len] != '\n')
+		len++;
+	if (!ft_strncmp (line, "NO ", 3) && !start)
+		cub -> texture.north_file = ft_strtrim(line, "NO \n\r");
+	else if (!ft_strncmp (line, "SO ", 3) && !start)
+		cub -> texture.south_file = ft_strtrim(line, "SO \n\r");
+	else if (!ft_strncmp (line, "WE ", 3) && !start)
+		cub -> texture.west_file = ft_strtrim(line, "WE \n\r");
+	else if (!ft_strncmp (line, "EA ", 3) && !start)
+		cub -> texture.east_file = ft_strtrim(line, "EA \n\r");
+	else if (!ft_strncmp (line, "F ", 2) && !start)
+		ret = get_color (&cub -> colors.floor, line);
+	else if (!ft_strncmp (line, "C ", 2) && !start)
+		ret = get_color (&cub -> colors.ceiling, line);
+	else if (ft_strchr("NWES01 ", line[0]) || start)
+		start = get_map (cub, line);
+	return (ret);
 }
 
-
-void	parse_texture_line(char *str, t_texture *texture)
+/**
+ * @brief 
+ * A função get_scene_description_data() lê os dados da cena a partir do arquivo de descrição 
+ * e preenche a estrutura t_cub com essas informações.
+ * 
+ * @param cub Um ponteiro para a estrutura t_cub que contém o nome do 
+ * arquivo de descrição da cena e onde os dados serão armazenados.
+ * 
+ * @return Esta função não retorna um valor.
+ */
+void	get_scene_description_data(t_cub *cub)
 {
-	char	**split;
-	size_t	i;
-	size_t	len;
+	char	*line;
+	int		fd;
+	int		error;
 
-	printf("\n\nIN PARSE_TEXTURE_LINE\n");
-
-	i = 0;
-	split = ft_split(str, ' ');
-	if (!split)
+	fd = open (cub -> scene_description, O_RDONLY);
+	if (fd == -1)
+	 	cub_exit (cub, "Can't open scene description file.", 1);
+	line = get_next_line (fd);
+	error = 0;
+	while (line && error >= 0)
 	{
-		printf(ERROR_MEMORY);
-		exit(EXIT_FAILURE);
+		error += set_data (cub, line);
+		free_ptr (&line);
+		line = get_next_line (fd);
 	}
-	if (split[0] && split[1])
+	if (error < 2)
 	{
-		// imprime o último caractere de split[1]
-		// printf("split[1]: %s\n", split[1]);
-		// printf("split[1][ft_strlen(split[1]) - 1]: %c\n", split[1][ft_strlen(split[1]) - 1]);
-		// printf("split[1][ft_strlen(split[1]) - 1]: %d\n", split[1][ft_strlen(split[1]) - 1]);
-		len = ft_strlen(split[1]);
-		if (len > 0 && split[1][len - 1] == '\n')
-			split[1][len - 1] = '\0';
-		if (ft_strnstr(str, "NO ", ft_strlen(str)) != NULL)
-			texture->north.path = ft_strdup(split[1]);
-		else if (ft_strnstr(str, "SO ", ft_strlen(str)) != NULL)
-			texture->south.path = ft_strdup(split[1]);
-		else if (ft_strnstr(str, "WE ", ft_strlen(str)) != NULL)
-			texture->west.path = ft_strdup(split[1]);
-		else if (ft_strnstr(str, "EA ", ft_strlen(str)) != NULL)
-			texture->east.path = ft_strdup(split[1]);
-	}
-	while (split[i])
-	{
-		free(split[i]);
-		i++;
-	}
-	free(split);
-	// printf("texture->north.path: %s\n", texture->north.path);
-	// //imprimir o ultimo caractere de texture->north.path
-	// printf("texture->north.path: %c\n", texture->north.path[ft_strlen(texture->north.path) - 1]);
-	// printf("last char of texture->north.path: %d\n", texture->north.path[ft_strlen(texture->north.path) - 1]);
-	// printf("texture->north.height: %d\n", texture->north.height);
-	// printf("texture->north.width: %d\n", texture->north.width);
-
-	printf("\n\nOUT PARSE_TEXTURE_LINE\n");
-}
-
-void	parse_map_line(t_cub *cub, char *str)
-{
-	char	**new_map_lines;
-	size_t	i;
-
-	// Verifica se é uma linha válida do mapa
-	if (!is_empty_or_spaces(str) && is_map_line(str))
-	{
-		// Aloca espaço para uma nova linha do mapa
-		new_map_lines = ft_calloc(cub->map->height + 1, sizeof(char *));
-		if (!new_map_lines)
+		while (line)
 		{
-			printf(ERROR_MEMORY);
-			exit(EXIT_FAILURE);
+			free_ptr (&line);
+			line = get_next_line (fd);
 		}
-		// Copia as linhas já existentes para a nova matriz
-		i = 0;
-		while (i < cub->map->height)
-		{
-			new_map_lines[i] = cub->map->map_lines[i];
-			i++;
-		}
-		// Libera a matriz antiga, se existir
-		free(cub->map->map_lines);
-		cub->map->map_lines = new_map_lines;
-		// Aloca espaço para a nova linha e a adiciona ao final da matriz
-		cub->map->map_lines[cub->map->height] = ft_strdup(str);
-		if (!cub->map->map_lines[cub->map->height])
-		{
-			printf(ERROR_MEMORY);
-			exit(EXIT_FAILURE);
-		}
-		cub->map->height++;
 	}
-}
-
-int	parser_cub(t_cub *cub)
-{
-	printf("\n\nIN PARSER_CUB\n");
-
-	cub->map->map_lines = ft_calloc(cub->map->height + 1, sizeof(char *));
-	if (!cub->map->map_lines)
-		return (1);
-	read_cub_map_file(cub);
-
-	// printf("\n\n-----------------------------\n");
-	// printf("\n\nPARSER_CUB\n");
-	// printf("img->floor_color.r: %d\n", cub->img.floor_color.r);
-	// printf("img->floor_color.g: %d\n", cub->img.floor_color.g);
-	// printf("img->floor_color.b: %d\n", cub->img.floor_color.b);
-	// printf("img->ceiling_color.r: %d\n", cub->img.ceiling_color.r);
-	// printf("img->ceiling_color.g: %d\n", cub->img.ceiling_color.g);
-	// printf("img->ceiling_color.b: %d\n", cub->img.ceiling_color.b);
-	// printf("\n\n-----------------------------\n");
-
-	if (check_chars(cub))
-		return (1);
-	// is_surrounded_walls não está perfeita
-	if (is_surrounded_walls(cub))
-		return (1);
-
-	printf("\n\nOUT PARSER_CUB\n");
-	return (0);
+	if (error < 2)
+		cub_exit (cub, "Invalid scene information.", 1);
 }
