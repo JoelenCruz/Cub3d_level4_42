@@ -29,33 +29,25 @@ void	init_texture(t_cub *cub)
 	int	temp_height;
 	int	temp_width;
 
-	if (cub->texture.height != cub->texture.width)
-		cub_exit(cub, "All textures must be square.", 1);
+	cub->texture.north_image = mlx_xpm_file_to_image(cub->mlx,cub->texture.north_file, &cub->texture.height, &cub->texture.width);
 
 	temp_height = cub->texture.height;
 	temp_width = cub->texture.width;
 
-
-	cub->texture.north_image = mlx_xpm_file_to_image(cub->mlx,cub->texture.north_file, &cub->texture.height, &cub->texture.width);
-	if (temp_height != cub->texture.height || temp_width != cub->texture.width)
-		cub_exit(cub, "Can't import texture.", 1);
-
-	
+	if (cub->texture.height != cub->texture.width)
+		cub_exit(cub, "All textures must be square.", 1);
 	cub->texture.south_image = mlx_xpm_file_to_image(cub->mlx,cub->texture.south_file, &cub->texture.height, &cub->texture.width);
 	if (temp_height != cub->texture.height || temp_width != cub->texture.width)
-		cub_exit(cub, "Can't import texture.", 1);
-
-
+		cub_exit(cub, "Can't import texture south_image. ", 1);
 	cub->texture.west_image = mlx_xpm_file_to_image(cub->mlx,cub->texture.west_file, &cub->texture.height, &cub->texture.width);
 	if (temp_height != cub->texture.height || temp_width != cub->texture.width)
-		cub_exit(cub, "Can't import texture.", 1);
-
-
+		cub_exit(cub, "Can't import texture west_image.", 1);
 	cub->texture.east_image = mlx_xpm_file_to_image(cub->mlx, cub->texture.east_file, &cub->texture.height, &cub->texture.width);
 	if (temp_height != cub->texture.height || temp_width != cub->texture.width)
-		cub_exit(cub, "Can't import texture.", 1);
-
+		cub_exit(cub, "Can't import texture east_image.", 1);
 }
+
+
 
 
 
