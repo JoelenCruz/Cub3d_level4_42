@@ -1,6 +1,7 @@
-SO textures/test/south.xpm
-WE textures/test/west.xpm
-EA textures/test/east.xpm
+NO ./textures/42_NO.xpm
+SO ./textures/42_SO.xpm
+EA ./textures/42_EA.xpm  
+
 
 F 20,20,20
 C 200,200,200

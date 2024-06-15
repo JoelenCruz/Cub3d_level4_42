@@ -50,6 +50,30 @@ int	get_map(t_cub *cub, char *line)
 }
 
 
+
+static int count_char(const char *str, char ch) 
+{
+    int count = 0;
+    while (*str) 
+	{
+        if (*str == ch)
+            count++;
+        str++;
+    }
+    return count;
+}
+
+static int has_at_least_two_commas(const char *line) 
+{
+    return count_char(line, ',') == 2;
+}
+
+static int has_at_negative(const char *line) 
+{
+    return count_char(line, '-') >= 1;
+}
+
+
 /**
  * @brief 
  * A função get_color() converte uma string que representa 
@@ -67,22 +91,44 @@ static int	get_color(int *color, char *line)
 {
 	t_get_color	c;
 
+    if (!has_at_least_two_commas(line) || has_at_negative(line))
+		return -1;
+
 	ft_bzero (&c, sizeof (t_get_color));
+
 	c.ret = 1;
 	c.start = 2;
 	c.len = ft_strchr (line + c.start, ',') - line - c.start;
+	
 	c.temp[0] = ft_substr (line, c.start, c.len);
+	if (ft_strlen(c.temp[0]) <= 0 || ft_atoi (c.temp[0]) > 255)
+		return (-1);
 	*color = ft_atoi (c.temp[0]) << 16;
 	c.start += c.len + 1;
 	c.len = ft_strchr (line + c.start, ',') - line - c.start;
+	
 	c.temp[1] = ft_substr (line, c.start, c.len);
+	if (ft_strlen(c.temp[1]) <= 0 || ft_atoi (c.temp[1]) > 255)
+		return (-1);
 	*color |= ((unsigned char) ft_atoi (c.temp[1])) << 8;
 	c.start += c.len + 1;
 	c.len = ft_strchr (line + c.start, '\0') - line - c.start;
+	
 	c.temp[2] = ft_substr (line, c.start, c.len);
+	if (ft_strlen(c.temp[2]) <= 1 || ft_atoi (c.temp[2]) > 255)
+		return (-1);
 	*color |= ((unsigned char) ft_atoi (c.temp[2]));
+
 	if (!c.temp[0] || !c.temp[1] || !c.temp[2])
 		c.ret = -1;
+	
+	ft_putnbr_fd(ft_atoi (c.temp[0]), 1);
+	ft_putchar_fd('\n', 1);
+	ft_putnbr_fd(ft_atoi (c.temp[1]), 1);
+	ft_putchar_fd('\n', 1);
+	ft_putnbr_fd(ft_atoi (c.temp[2]), 1);
+	ft_putchar_fd('\n', 1);
+
 	free_ptr (&c.temp[0]);
 	free_ptr (&c.temp[1]);
 	free_ptr (&c.temp[2]);
@@ -110,6 +156,7 @@ static int	set_data(t_cub *cub, char *line)
 	len = 0;
 	ret = 0;
 
+	
     while (line[len] && (line[len] == ' ' || line[len] == '\t'))
         len++;
     if (!ft_strncmp(line + len, "NO ", 3) && !start)
@@ -125,9 +172,8 @@ static int	set_data(t_cub *cub, char *line)
     else if (!ft_strncmp(line + len, "C ", 2) && !start)
         ret = get_color(&cub->colors.ceiling, line + len);
     else if (ft_strchr("NWES01 ", line[len]) || start)
-        start = get_map(cub, line + len);
-
-    return ret;
+		start = get_map(cub, line + len);
+	return ret;
 }
 
 /**
