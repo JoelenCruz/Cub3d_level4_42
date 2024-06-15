@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: joe <joe@student.42.fr>                    +#+  +:+       +#+         #
+#    By: evdos-sa <evdos-sa@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/06 12:38:00 by joe               #+#    #+#              #
-#    Updated: 2024/06/09 18:51:27 by joe              ###   ########.fr        #
+#    Updated: 2024/06/15 13:42:43 by evdos-sa         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,7 @@ SRC			 = main.c \
 
 
 
-HDR			 = cub3d.h 
+HDR			 = cub3d.h
 
 HDR			:= ${addprefix ${HDR_DIR}, ${HDR}}
 
@@ -61,7 +61,7 @@ CFLAGS		 = -Wall -Werror -Wextra
 
 MKFLAGS		 = -j35 -s --no-print-directory --directory=${LFT_DIR}
 
-MLXFLAGS	 = -L./minilibx_linux -lmlx -lXext -lX11
+MLXFLAGS	 = -L./minilibx-linux -lmlx -lXext -lX11
 
 MTFLAGS		 = -lm
 
