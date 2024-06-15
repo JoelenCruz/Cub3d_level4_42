@@ -29,56 +29,33 @@ void	init_texture(t_cub *cub)
 	int	temp_height;
 	int	temp_width;
 
-	cub->texture.north_image = mlx_xpm_file_to_image(cub->mlx, \
-		cub->texture.north_file, &cub->texture.height, &cub->texture.width);
 	if (cub->texture.height != cub->texture.width)
 		cub_exit(cub, "All textures must be square.", 1);
+
 	temp_height = cub->texture.height;
 	temp_width = cub->texture.width;
-	cub->texture.south_image = mlx_xpm_file_to_image(cub->mlx, \
-		cub->texture.south_file, &cub->texture.height, &cub->texture.width);
-	if (temp_height != cub->texture.height || \
-		temp_width != cub->texture.width)
+
+
+	cub->texture.north_image = mlx_xpm_file_to_image(cub->mlx,cub->texture.north_file, &cub->texture.height, &cub->texture.width);
+	if (temp_height != cub->texture.height || temp_width != cub->texture.width)
 		cub_exit(cub, "Can't import texture.", 1);
-	cub->texture.west_image = mlx_xpm_file_to_image(cub->mlx, \
-		cub->texture.west_file, &cub->texture.height, &cub->texture.width);
-	if (temp_height != cub->texture.height || \
-		temp_width != cub->texture.width)
+
+	
+	cub->texture.south_image = mlx_xpm_file_to_image(cub->mlx,cub->texture.south_file, &cub->texture.height, &cub->texture.width);
+	if (temp_height != cub->texture.height || temp_width != cub->texture.width)
 		cub_exit(cub, "Can't import texture.", 1);
-	cub->texture.east_image = mlx_xpm_file_to_image(cub->mlx, \
-		cub->texture.east_file, &cub->texture.height, &cub->texture.width);
-	if (temp_height != cub->texture.height || \
-		temp_width != cub->texture.width)
+
+
+	cub->texture.west_image = mlx_xpm_file_to_image(cub->mlx,cub->texture.west_file, &cub->texture.height, &cub->texture.width);
+	if (temp_height != cub->texture.height || temp_width != cub->texture.width)
 		cub_exit(cub, "Can't import texture.", 1);
+
+
+	cub->texture.east_image = mlx_xpm_file_to_image(cub->mlx, cub->texture.east_file, &cub->texture.height, &cub->texture.width);
+	if (temp_height != cub->texture.height || temp_width != cub->texture.width)
+		cub_exit(cub, "Can't import texture.", 1);
+
 }
-
-// void	render_textures(t_cub *cub)
-// {
-// 	printf("\n\nIN RENDER_TEXTURES\n");
-
-// 	// printf("cub->texture.north.path: %s\n", cub->texture.north.path);
-// 	// printf("cub->texture.north.height: %d\n", cub->texture.north.height);
-// 	// printf("cub->texture.north.width: %d\n", cub->texture.north.width);
-// 	// Carrega as texturas
-// 	load_texture(cub, &(cub->texture.north_image));
-// 	load_texture(cub, &(cub->texture.south_image));
-// 	load_texture(cub, &(cub->texture.east_image));
-// 	load_texture(cub, &(cub->texture.west_image));
-
-// 	// // Desenha as texturas na tela
-// 	// draw_texture(cub, &(cub->texture.north), 0, 0);
-// 	// draw_texture(cub, &(cub->texture.south), 0, WIN_HEIGHT / 2);
-// 	// draw_texture(cub, &(cub->texture.east), WIN_WIDTH / 2, 0);
-// 	// draw_texture(cub, &(cub->texture.west), WIN_WIDTH / 2, WIN_HEIGHT / 2);
-
-// 	// // Libera a memória alocada para as texturas
-// 	// mlx_destroy_image(cub->mlx, cub->texture.north.img);
-// 	// mlx_destroy_image(cub->mlx, cub->texture.south.img);
-// 	// mlx_destroy_image(cub->mlx, cub->texture.east.img);
-// 	// mlx_destroy_image(cub->mlx, cub->texture.west.img);
-
-// 	// printf("\n\nOUT RENDER_TEXTURES\n");
-// }
 
 
 
@@ -86,6 +63,9 @@ void	cub_mlx_init(t_cub *cub)
 {
 	init_cub(cub);//inicar mlx
 	init_texture(cub); //inicar texturas
+	if (!cub->texture.north_image || !cub->texture.south_image || \
+		!cub->texture.west_image || !cub->texture.east_image)
+		cub_exit(cub, "Can't import texture main", 1);
 	cub->win = mlx_new_window(cub->mlx, WIN_WIDTH, WIN_HEIGHT, WIN_NAME);
 	if (!cub->win)
 		cub_exit(cub, "Can't init game window.", 1);

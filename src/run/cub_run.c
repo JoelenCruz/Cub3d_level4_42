@@ -18,7 +18,7 @@ static int	render(t_cub *cub)
 	check_keys (cub);
 	draw_background(cub);
 	raycast (cub);
-	//render_mini_map(cub);
+	render_mini_map(cub);
 	mlx_put_image_to_window (cub -> mlx, cub -> win, cub -> img.info, 0, 0);
 	return (0);
 }
@@ -26,10 +26,6 @@ static int	render(t_cub *cub)
 
 void	cub_run(t_cub *cub)
 {
-	printf("cub_run");
-	
 	mlx_loop_hook (cub -> mlx, render, cub);
-	
 	mlx_loop(cub -> mlx);
-	
 }

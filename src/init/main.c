@@ -50,7 +50,5 @@ int	main(int argc, char **argv)
 	cub_check_args(argc, argv);
 	cub_init(&cub, argv);
 	cub_run(&cub);
-	
-
 	return (0);
 }

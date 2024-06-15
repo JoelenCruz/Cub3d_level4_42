@@ -60,7 +60,8 @@ int	get_map(t_cub *cub, char *line)
  * resultante no formato 0xRRGGBB.
  * @param line A linha contendo a definição da cor no formato "R,G,B".
  * 
- * @return Um inteiro indicando sucesso (1) ou falha (-1) no processamento da cor.
+ * @return Um inteiro indicando sucesso (1) ou falha (-1) 
+ * no processamento da cor.
  */
 static int	get_color(int *color, char *line)
 {
@@ -97,7 +98,8 @@ static int	get_color(int *color, char *line)
  * com os dados da cena.
  * @param line A linha de dados a ser processada.
  * 
- * @return Um inteiro indicando sucesso (0) ou falha (número positivo indicando o erro).
+ * @return Um inteiro indicando sucesso (0) ou falha 
+ * (número positivo indicando o erro).
  */
 static int	set_data(t_cub *cub, char *line)
 {
@@ -107,28 +109,31 @@ static int	set_data(t_cub *cub, char *line)
 
 	len = 0;
 	ret = 0;
-	while (line[len] && line[len] != '\n')
-		len++;
-	if (!ft_strncmp (line, "NO ", 3) && !start)
-		cub -> texture.north_file = ft_strtrim(line, "NO \n\r");
-	else if (!ft_strncmp (line, "SO ", 3) && !start)
-		cub -> texture.south_file = ft_strtrim(line, "SO \n\r");
-	else if (!ft_strncmp (line, "WE ", 3) && !start)
-		cub -> texture.west_file = ft_strtrim(line, "WE \n\r");
-	else if (!ft_strncmp (line, "EA ", 3) && !start)
-		cub -> texture.east_file = ft_strtrim(line, "EA \n\r");
-	else if (!ft_strncmp (line, "F ", 2) && !start)
-		ret = get_color (&cub -> colors.floor, line);
-	else if (!ft_strncmp (line, "C ", 2) && !start)
-		ret = get_color (&cub -> colors.ceiling, line);
-	else if (ft_strchr("NWES01 ", line[0]) || start)
-		start = get_map (cub, line);
-	return (ret);
+
+    while (line[len] && (line[len] == ' ' || line[len] == '\t'))
+        len++;
+    if (!ft_strncmp(line + len, "NO ", 3) && !start)
+        cub->texture.north_file = ft_strtrim(line + len, "NO \n\r");
+    else if (!ft_strncmp(line + len, "SO ", 3) && !start)
+        cub->texture.south_file = ft_strtrim(line + len, "SO \n\r");
+    else if (!ft_strncmp(line + len, "WE ", 3) && !start)
+        cub->texture.west_file = ft_strtrim(line + len, "WE \n\r");
+    else if (!ft_strncmp(line + len, "EA ", 3) && !start)
+        cub->texture.east_file = ft_strtrim(line + len, "EA \n\r");
+    else if (!ft_strncmp(line + len, "F ", 2) && !start)
+        ret = get_color(&cub->colors.floor, line + len);
+    else if (!ft_strncmp(line + len, "C ", 2) && !start)
+        ret = get_color(&cub->colors.ceiling, line + len);
+    else if (ft_strchr("NWES01 ", line[len]) || start)
+        start = get_map(cub, line + len);
+
+    return ret;
 }
 
 /**
  * @brief 
- * A função get_scene_description_data() lê os dados da cena a partir do arquivo de descrição 
+ * A função get_scene_description_data() lê os dados da cena a partir 
+ * do arquivo de descrição 
  * e preenche a estrutura t_cub com essas informações.
  * 
  * @param cub Um ponteiro para a estrutura t_cub que contém o nome do 
