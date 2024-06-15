@@ -17,10 +17,13 @@ void	free_mat(char ***mat)
 	size_t	i;
 
 	i = 0;
-	while (*mat && mat[0][i])
-		free_ptr (&mat[0][i++]);
-	if (*mat)
-		free (*mat);
+	while (*mat && (*mat)[i])
+	{
+		free ((*mat)[i]);
+		(*mat)[i] = NULL;
+		i++;
+	}
+	free (*mat);
 	*mat = NULL;
 }
 
