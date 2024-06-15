@@ -70,7 +70,9 @@ static int has_at_least_two_commas(const char *line)
 
 static int has_at_negative(const char *line) 
 {
-    return count_char(line, '-') >= 1;
+	if (count_char(line, '-') % 2 == 0)
+		return (0);
+    return (1);
 }
 
 
