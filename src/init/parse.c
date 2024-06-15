@@ -50,6 +50,30 @@ int	get_map(t_cub *cub, char *line)
 }
 
 
+
+static int count_char(const char *str, char ch) 
+{
+    int count = 0;
+    while (*str) 
+	{
+        if (*str == ch)
+            count++;
+        str++;
+    }
+    return count;
+}
+
+static int has_at_least_two_commas(const char *line) 
+{
+    return count_char(line, ',') == 2;
+}
+
+static int has_at_negative(const char *line) 
+{
+    return count_char(line, '-') >= 1;
+}
+
+
 /**
  * @brief 
  * A função get_color() converte uma string que representa 
@@ -67,26 +91,39 @@ static int	get_color(int *color, char *line)
 {
 	t_get_color	c;
 
+    if (!has_at_least_two_commas(line) || has_at_negative(line))
+		return -1;
+
 	ft_bzero (&c, sizeof (t_get_color));
 	c.ret = 1;
 	c.start = 2;
 	c.len = ft_strchr (line + c.start, ',') - line - c.start;
+
 	c.temp[0] = ft_substr (line, c.start, c.len);
-	*color = ft_atoi (c.temp[0]) << 16;
-	c.start += c.len + 1;
-	c.len = ft_strchr (line + c.start, ',') - line - c.start;
 	c.temp[1] = ft_substr (line, c.start, c.len);
-	*color |= ((unsigned char) ft_atoi (c.temp[1])) << 8;
-	c.start += c.len + 1;
-	c.len = ft_strchr (line + c.start, '\0') - line - c.start;
 	c.temp[2] = ft_substr (line, c.start, c.len);
-	*color |= ((unsigned char) ft_atoi (c.temp[2]));
-	if (!c.temp[0] || !c.temp[1] || !c.temp[2])
-		c.ret = -1;
-	free_ptr (&c.temp[0]);
-	free_ptr (&c.temp[1]);
-	free_ptr (&c.temp[2]);
-	return (c.ret);
+
+
+	if (ft_strlen(c.temp[0]) > 1 || ft_strlen(c.temp[1]) > 1 || ft_strlen(c.temp[2]) > 1 )
+	{
+		if (ft_atoi (c.temp[0]) > 255 || ft_atoi (c.temp[1]) > 255 || ft_atoi (c.temp[2]) > 255)
+			return (-1);
+		*color = ft_atoi (c.temp[0]) << 16;
+		c.start += c.len + 1;
+		c.len = ft_strchr (line + c.start, ',') - line - c.start;		
+		*color |= ((unsigned char) ft_atoi (c.temp[1])) << 8;
+		c.start += c.len + 1;
+		c.len = ft_strchr (line + c.start, '\0') - line - c.start;
+		*color |= ((unsigned char) ft_atoi (c.temp[2]));
+		if (!c.temp[0] || !c.temp[1] || !c.temp[2])
+			c.ret = -1;
+		free_ptr (&c.temp[0]);
+		free_ptr (&c.temp[1]);
+		free_ptr (&c.temp[2]);
+		return (c.ret);
+	}
+	else
+		return (-1);
 }
 
 /**
