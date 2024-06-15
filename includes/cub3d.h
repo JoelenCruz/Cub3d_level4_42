@@ -86,15 +86,6 @@ typedef struct s_coord
 	int	y;
 }	t_coord;
 
-typedef struct s_minimapa
-{
-    void *img;
-    char *addr;
-    int bits_per_pixel;
-    int line_length;
-    int endian;
-} t_minimapa;
-
 typedef struct s_get_color
 {
 	size_t	start;
@@ -207,7 +198,6 @@ typedef struct s_cub
 	t_player	p;
 	t_keys		keys;
 	t_color		colors;
-	t_minimapa	minimapa;
 }	t_cub;
 
 

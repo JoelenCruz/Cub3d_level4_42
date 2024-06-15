@@ -61,7 +61,7 @@ CFLAGS		 = -Wall -Werror -Wextra
 
 MKFLAGS		 = -j35 -s --no-print-directory --directory=${LFT_DIR}
 
-MLXFLAGS	 = -L./minilibx_linux -lmlx -lXext -lX11
+MLXFLAGS	 = -L./minilibx-linux -lmlx -lXext -lX11
 
 MTFLAGS		 = -lm
 
