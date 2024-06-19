@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: evdos-sa <evdos-sa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: everton <everton@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 14:23:54 by joe               #+#    #+#             */
-/*   Updated: 2024/06/19 16:01:45 by evdos-sa         ###   ########.fr       */
+/*   Updated: 2024/06/19 22:39:03 by everton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,15 +82,15 @@ static int	set_data(t_cub *cub, char *line)
 	else if (!ft_strncmp(line + len, "C ", 2) && !start)
 		ret = get_color(&cub->colors.ceiling, line + len);
 	else if (ft_strchr("NWES01 ", line[len]) || start)
-		start = get_map(cub, line + len);
+		start = get_map(cub, line + (len - len));
 	return (ret);
 }
 
 /**
  * @brief
  * A função get_scene_description_data() lê os dados da cena a partir
- * do arquivo de descrição
- * e preenche a estrutura t_cub com essas informações.
+ * do arquivo de descrição e preenche a estrutura t_cub com essas
+ * informações.
  *
  * @param cub Um ponteiro para a estrutura t_cub que contém o nome do
  * arquivo de descrição da cena e onde os dados serão armazenados.
