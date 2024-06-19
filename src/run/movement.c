@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   movement.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joe <joe@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: evdos-sa <evdos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 11:21:30 by joe               #+#    #+#             */
-/*   Updated: 2024/06/09 14:13:30 by joe              ###   ########.fr       */
+/*   Updated: 2024/06/19 16:09:56 by evdos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,3 @@ void	check_keys(t_cub *cub)
 	if (cub -> keys.right == PRESSED)
 		player_turn (cub, RIGHT);
 }
-

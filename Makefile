@@ -6,7 +6,7 @@
 #    By: evdos-sa <evdos-sa@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/06 12:38:00 by joe               #+#    #+#              #
-#    Updated: 2024/06/15 13:42:43 by evdos-sa         ###   ########.fr        #
+#    Updated: 2024/06/19 15:38:42 by evdos-sa         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,8 +22,9 @@ LFT_DIR	 = libft/
 
 SRC			 = main.c \
 			   cub_init.c \
-			   mlx_init.c \
+			   init_cub_mlx.c \
 			   parse.c \
+			   cub_get_color.c \
 			   check_map.c \
 			   utils.c \
 			   cub_exit.c \

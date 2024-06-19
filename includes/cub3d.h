@@ -6,11 +6,11 @@
 /*   By: evdos-sa <evdos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 20:10:34 by everton           #+#    #+#             */
-/*   Updated: 2024/06/15 13:43:16 by evdos-sa         ###   ########.fr       */
+/*   Updated: 2024/06/19 16:19:01 by evdos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef	CUB3D_H
+#ifndef CUB3D_H
 # define CUB3D_H
 
 /* -------------------------------------------------------------------------- */
@@ -35,24 +35,17 @@
 # define WIN_NAME "Cub3d"
 # define WIN_WIDTH 960
 # define WIN_HEIGHT 600
-
-
 # define ESC_KEY 65307
 # define LEFT_KEY 65361
 # define UP_KEY 65362
 # define RIGHT_KEY 65363
 # define DOWN_KEY 65364
-
 # define LEFT 1
 # define RIGHT 2
-
 # define PRESSED 1
 # define RELEASED 2
-
 # define PI 3.1415
 # define DR 0.0174533
-
-
 # define FOV 60
 # define MAX_DIST 1000000000
 # define MAX_RAYS 480
@@ -63,7 +56,7 @@
 # define PRECISION_UP 1
 # define STEPS 0.25
 # define TURN_ANG 0.07
-
+# define MMAP_SCL 6
 
 /* -------------------------------------------------------------------------- */
 /* MACROS                                                                */
@@ -94,7 +87,6 @@ typedef struct s_get_color
 	int		ret;
 }			t_get_color;
 
-
 typedef struct s_keys
 {
 	int	esc;
@@ -107,7 +99,6 @@ typedef struct s_keys
 	int	s;
 	int	d;
 }	t_keys;
-
 
 typedef struct s_color
 {
@@ -200,23 +191,17 @@ typedef struct s_cub
 	t_color		colors;
 }	t_cub;
 
-
-
-
 /* -------------------------------------------------------------------------- */
-/* draw_background.c                                                             */
+/* draw_background.c                                                          */
 /* -------------------------------------------------------------------------- */
 
-int	is_surrounded_walls(t_cub *cub);
-void	cub_start(t_cub *cub);
-
-
+int		is_surrounded_walls(t_cub *cub);
 
 /* ------------------------------------------------------------------------- */
 /* check_map                                                          		 */
 /* ------------------------------------------------------------------------- */
-void	cub_check_args(int argc, char **argv);
 
+void	cub_check_args(int argc, char **argv);
 void	check_map(t_cub *cub);
 
 /* ------------------------------------------------------------------------- */
@@ -225,7 +210,7 @@ void	check_map(t_cub *cub);
 
 void	set_zero(t_cub *cub);
 void	cub_init(t_cub *cub, char **argv);
-
+int		get_color(int *color, char *line);
 
 /* ------------------------------------------------------------------------- */
 /* mlx_init                                                          		 */
@@ -234,98 +219,77 @@ void	cub_init(t_cub *cub, char **argv);
 void	draw_pixel(t_img *img, int x, int y, int color);
 void	load_texture(t_cub *cub, t_img *texture);
 void	render_textures(t_cub *cub);
-void 	draw_background(t_cub *cub);
+void	draw_background(t_cub *cub);
 void	cub_mlx_init(t_cub *cub);
 
-
-
 /* ------------------------------------------------------------------------- */
-/* parse                                                        		 */
+/* parse                                                         			 */
 /* ------------------------------------------------------------------------- */
 
 void	parse_color_line(char *str, t_img *img);
-int	is_texture_or_color_line(t_cub *cub, char *str);
-int	is_texture_or_color(char *str);
-int	is_map_line(char *str);
 void	print_read_map_lines(t_cub *cub);
 void	parse_texture_line(char *str, t_texture *texture);
 void	parse_map_line(t_cub *cub, char *str);
 int		parser_cub(t_cub *cub);
-
-
 void	get_scene_description_data(t_cub *cub);
 
-
-
 /* ------------------------------------------------------------------------- */
-/* utils                                                        		 */
+/* utils                                                   		     		 */
 /* ------------------------------------------------------------------------- */
 
-int	is_empty_or_spaces(char *str);
 void	get_player_info(t_cub *cub);
 void	print_read_map_file(t_cub *cub);
-
-
 void	format_map(char ***map, size_t map_height, size_t map_width);
 
-
 /* ------------------------------------------------------------------------- */
-/* cub_free                                                        		 */
+/* cub_free                                                	        		 */
 /* ------------------------------------------------------------------------- */
 
 void	free_mat(char ***mat);
 void	free_ptr(char **str);
 void	free_memory(t_cub *cub);
 
-
 /* ------------------------------------------------------------------------- */
-/* cub_exit                                                       		 */
+/* cub_exit                                                    		   		 */
 /* ------------------------------------------------------------------------- */
 
-int	cub_close(t_cub *cub);
+int		cub_close(t_cub *cub);
 void	cub_exit(t_cub *cub, const char *msg, const int code);
 
-
 /* ------------------------------------------------------------------------- */
-/* actions                                                       		 */
-/* ------------------------------------------------------------------------- */
-
-int	button_down(int key_code, t_cub *cub);
-int	button_up(int key_code, t_cub *cub);
-
-
-/* ------------------------------------------------------------------------- */
-/* movements                                                      		 */
+/* movements                                                  	    		 */
 /* ------------------------------------------------------------------------- */
 
 void	check_keys(t_cub *cub);
 
 /* ------------------------------------------------------------------------- */
-/* cub_run                                                      		 */
+/* cub_run                                                   		   		 */
 /* ------------------------------------------------------------------------- */
 
 void	cub_run(t_cub *cub);
 
 /* ------------------------------------------------------------------------- */
-/* raycast                                                      		 */
+/* actions                                                       		 */
+/* ------------------------------------------------------------------------- */
+
+int		button_down(int key_code, t_cub *cub);
+int		button_up(int key_code, t_cub *cub);
+
+/* ------------------------------------------------------------------------- */
+/* raycast                                                  	    		 */
 /* ------------------------------------------------------------------------- */
 
 void	raycast(t_cub *cub);
 void	reset_params(t_cub *cub, t_raycast *rc);
 void	set_h_rays(t_cub *cub, t_raycast *rc);
 void	set_v_rays(t_cub *cub, t_raycast *rc);
-
 void	h_wall_hit(t_cub *cub, t_raycast *rc, int map_x, int map_y);
 void	v_wall_hit(t_cub *cub, t_raycast *rc, int map_x, int map_y);
-
 void	choose_wall(t_cub *cub, t_raycast *rc);
 void	choose_texture(t_cub *cub, t_raycast *rc);
 void	draw_3d_walls(t_cub *cub, t_raycast *rc);
-
 void	draw_rectangle(t_cub *cub, t_coord start, t_coord end, int color);
 float	dist(float ax, float ay, float bx, float by);
-
-
-void render_mini_map(t_cub *cub);
+void	render_mini_map(t_cub *cub);
 
 #endif

@@ -16,7 +16,8 @@
  * @brief
  * A função cub_check_args() verifica se o número correto de argumentos foi 
  * passado ao programa e se o argumento fornecido possui a extensão ".cub".
- * Se o número de argumentos não for 2 ou se a extensão do arquivo não for ".cub",
+ * Se o número de argumentos não for 2 ou se a extensão do arquivo não for 
+ ".cub",
  * a função imprime uma mensagem de erro apropriada e termina o programa.
  *
  * @param
@@ -41,7 +42,6 @@ void	cub_check_args(int argc, char **argv)
 		exit(1);
 	}
 }
-
 
 int	main(int argc, char **argv)
 {

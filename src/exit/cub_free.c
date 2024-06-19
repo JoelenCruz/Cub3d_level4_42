@@ -29,7 +29,7 @@ void	free_mat(char ***mat)
 
 void	free_ptr(char **str)
 {
-	if(*str)
+	if (*str)
 	{
 		free (*str);
 		*str = NULL;
@@ -38,19 +38,19 @@ void	free_ptr(char **str)
 
 void	free_memory(t_cub *cub)
 {
-	if(cub -> scene_map)
+	if (cub -> scene_map)
 		free_mat(&cub->scene_map);
-	if(cub -> texture.north_file)
+	if (cub -> texture.north_file)
 		free_ptr(&cub->texture.north_file);
-	if(cub -> texture.south_file)
+	if (cub -> texture.south_file)
 		free_ptr(&cub->texture.south_file);
-	if(cub -> texture.west_file)
+	if (cub -> texture.west_file)
 		free_ptr(&cub->texture.west_file);
-	if(cub -> texture.east_file)
+	if (cub -> texture.east_file)
 		free_ptr(&cub->texture.east_file);
-    if (cub -> mlx && cub -> win)
+	if (cub -> mlx && cub -> win)
 		mlx_destroy_window (cub -> mlx, cub -> win);
-    if (cub -> mlx)
+	if (cub -> mlx)
 		mlx_destroy_display (cub -> mlx);
-    free_ptr ((char **)&cub -> mlx);
+	free_ptr ((char **)&cub -> mlx);
 }

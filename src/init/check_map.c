@@ -30,7 +30,7 @@ static void	check_border(t_cub *cub, char **map, int y)
 		{
 			if (map[y - 1][x] != ' ' && map[y - 1][x] != '1')
 				cub_exit (cub, "Invalid Map.", 9);
-		}		
+		}
 		x++;
 	}
 }

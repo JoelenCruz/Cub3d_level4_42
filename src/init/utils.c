@@ -65,22 +65,19 @@ static void	set_temp(char ***map, size_t map_height, size_t map_width)
  */
 static void	get_direction(t_cub *cub, size_t x, size_t y)
 {
-	// Define as coordenadas do jogador como o centro da célula
 	cub -> p.x = x + 0.5;
 	cub -> p.y = y + 0.5;
-	//Coordenadas da coluna onde o jogador está na tela
 	cub -> p.col_x = x * (WIN_WIDTH / cub -> map_width);
 	cub -> p.col_y = y * (WIN_HEIGHT / cub -> map_height);
 	cub -> p.direction = cub -> scene_map[y][x];
-
 	if (cub -> scene_map[y][x] == 'N')
-	cub -> p.ang = PI / 2;
+		cub -> p.ang = PI / 2;
 	if (cub -> scene_map[y][x] == 'E')
 		cub -> p.ang = PI;
 	if (cub -> scene_map[y][x] == 'S')
 		cub -> p.ang = 3 * PI / 2;
 	cub -> p.dx = cos (cub -> p.ang);
-	cub -> p.dy = sin (cub -> p.ang);	
+	cub -> p.dy = sin (cub -> p.ang);
 }
 
 /**
@@ -99,18 +96,15 @@ void	get_player_info(t_cub *cub)
 	size_t	y;
 	size_t	play;
 
-
-
 	y = 0;
 	play = 0;
 	while (cub -> scene_map && cub -> scene_map[y])
 	{
 		if (play > 1)
-			cub_exit(cub,"Error:\nHave Mutiple!",1);
+			cub_exit(cub, "Error:\nHave Mutiple!", 1);
 		x = 0;
 		while (cub -> scene_map[y] && cub -> scene_map[y][x])
 		{
-			
 			if (ft_strchr ("NSWE", cub -> scene_map[y][x]))
 			{
 				get_direction (cub, x, y);
@@ -127,7 +121,8 @@ void	get_player_info(t_cub *cub)
  * A função format_map() reformata o mapa, substituindo caracteres 
  * de nova linha por espaços e atualizando o ponteiro do mapa.
  * 
- * @param map Um ponteiro para o ponteiro do array de strings que representa o mapa.
+ * @param map Um ponteiro para o ponteiro do array de strings que representa
+  o mapa.
  * @param map_height A altura atual do mapa.
  * @param map_width A largura atual do mapa.
  * 
