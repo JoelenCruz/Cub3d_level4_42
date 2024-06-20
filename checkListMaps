@@ -1,0 +1,54 @@
+I. GOOD
+
+ESC/[X]	-	MAP
+done		42.cub
+done		cheese_maze.cub
+done		directions.cub
+done		dungeon.cub
+done		library.cub
+done		matrix.cub
+done		sad_face.cub
+done		square_map.cub
+done		subject_map.cub
+done		submap.cub
+done		test_map.cub
+done		test_pos_bottom.cub
+done		test_pos_left.cub
+done		test_pos_right.cub
+done		test_pos_top.cub
+done		test_textures.cub
+done		test_whitespace.cub
+done		works.cub
+
+II. BAD
+
+	color_invalid_rgb.cub
+	color_missing.cub
+	color_missing_ceiling_rgb.cub
+	color_missing_floor_rgb.cub
+	color_none.cub
+	empty.cub
+	file_letter_end.cub
+	filetype_wrong.buc
+	forbidden.cub
+	map_first.cub
+	map_middle.cub
+	map_missing.cub
+	map_only.cub
+	map_too_small.cub
+	player_multiple.cub
+	player_none.cub
+	player_on_edge.cub
+	surrounded.cub
+	textures_dir.cub
+	textures_duplicates.cub
+	textures_forbidden.cub
+	textures_invalid.cub
+	textures_missing.cub
+	textures_none.cub
+	textures_not_xpm.cub
+	wall_hole_east.cub
+	wall_hole_north.cub
+	wall_hole_south.cub
+	wall_hole_west.cub
+	wall_none.cub

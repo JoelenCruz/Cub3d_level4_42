@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: evdos-sa <evdos-sa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: everton <everton@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 20:10:34 by everton           #+#    #+#             */
-/*   Updated: 2024/06/19 16:19:01 by evdos-sa         ###   ########.fr       */
+/*   Updated: 2024/06/20 21:57:39 by everton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@
 # define ERROR_RGB "Error:\n RGB values out of range (0-255)\n"
 # define ERROR_MSG "\033[1;31mError\n\033[0m"
 # define EXIT_MSG "\033[1;31mTO EXIT CUB3D!\n\033[0m"
+# define ERROR_SAVE_FILE "Error\nFailed to save file\n"
+# define ERROR_SAVE_ARG "Error\nInvalid argument for save\n"
 
 /* -------------------------------------------------------------------------- */
 /* STRUCTURES                                                                 */
@@ -180,10 +182,15 @@ typedef struct s_cub
 {
 	void		*mlx;
 	void		*win;
+	char		*header;
 	char		*scene_description;
 	char		**scene_map;
 	int			map_height;
 	int			map_width;
+	int			win_width;
+	int			win_height;
+	int			*img_save;
+	int			save;
 	t_img		img;
 	t_texture	texture;
 	t_player	p;
@@ -201,6 +208,7 @@ int		is_surrounded_walls(t_cub *cub);
 /* check_map                                                          		 */
 /* ------------------------------------------------------------------------- */
 
+void	new_cub_check_args(int argc, char **argv, t_cub *cub);
 void	cub_check_args(int argc, char **argv);
 void	check_map(t_cub *cub);
 

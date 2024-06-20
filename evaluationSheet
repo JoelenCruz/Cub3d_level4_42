@@ -1,0 +1,31 @@
+Evaluation Sheet
+
+I. Mandatory part
+
+	1. Configuration file:
+
+		"Verifique se você pode configurar TODOS os elementos a seguir no arquivo de configuração. A formatação deverá ser conforme descrita no assunto."
+
+		a. resolução da imagem/tamanho da janela - R;
+
+	2. Technical elements of the display:
+
+		"Vamos avaliar os elementos técnicos da tela.  Execute o programa e execute os 5 testes seguintes.  Se pelo menos um falhar, nenhum ponto será concedido para esta seção. Passe para o próximo."
+
+		a. As janelas devem abrir na inicialização do programa se o argumento `--save` não for fornecido. Deve permanecer aberto durante toda a execução e ter a resolução definida no arquivo de configuração.
+
+		c. Quando o argumento `--save` é fornecido, o programa não abrirá uma janela, mas gerará um arquivo no formato bmp com a resolução definida no arquivo de configuração (tecla R).
+
+			Exemplo by Everton: ./cub3D map.cub --save
+
+		d. Defina uma resolução (tecla R) no arquivo de configuração maior que a resolução real da tela.
+	O programa deve redimensionar a janela para caber na resolução da tela.
+
+	3. User basic events	-	ALL OK !!!
+	4. Movements			-	ALL OK !!!
+	5. Walls & Sprites		-	ALL OK !!!
+	6. Error management		-	ALL OK !!!
+
+II. BONUS
+
+	"Analisaremos seus bônus se e somente se sua parte obrigatória for excelente. Isso significa que você deve completar o parte obrigatória, do começo ao fim, e seu gerenciamento de erros deve ser impecável, mesmo em casos de erros ou distorções uso. Então se a parte obrigatória não marcou todos os pontos durante essa defesa os bônus serão totalmente ignorados."
