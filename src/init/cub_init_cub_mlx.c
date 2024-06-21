@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mlx_init.c                                         :+:      :+:    :+:   */
+/*   cub_init_cub_mlx.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joe <joe@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: everton <everton@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 11:22:44 by joe               #+#    #+#             */
-/*   Updated: 2024/06/09 14:41:33 by joe              ###   ########.fr       */
+/*   Updated: 2024/06/21 19:35:34 by everton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static void	init_cub(t_cub *cub)
+static void	init_cub_whith_mlx(t_cub *cub)
 {
 	cub->mlx = mlx_init();
 	if (!cub->mlx)
@@ -22,7 +22,7 @@ static void	init_cub(t_cub *cub)
 		&cub->img.line_len, &cub->img.endian);
 }
 
-void	init_texture(t_cub *cub)
+void	init_texture_white_mlx(t_cub *cub)
 {
 	int	temp_height;
 	int	temp_width;
@@ -50,8 +50,8 @@ void	init_texture(t_cub *cub)
 
 void	cub_mlx_init(t_cub *cub)
 {
-	init_cub(cub);
-	init_texture(cub);
+	init_cub_whith_mlx(cub);
+	init_texture_white_mlx(cub);
 	if (!cub->texture.north_image || !cub->texture.south_image || \
 		!cub->texture.west_image || !cub->texture.east_image)
 		cub_exit(cub, "Can't import texture main", 1);

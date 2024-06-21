@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub_get_color.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: evdos-sa <evdos-sa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: everton <everton@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 15:37:01 by evdos-sa          #+#    #+#             */
-/*   Updated: 2024/06/19 15:59:35 by evdos-sa         ###   ########.fr       */
+/*   Updated: 2024/06/21 19:39:11 by everton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static bool	validate_line_conditions(const char *line)
 	return (true);
 }
 
-static int	validate_component(char *line, t_get_color *c, \
+static int	validate_rgb(char *line, t_get_color *c, \
 int *color, int shift)
 {
 	char	*comma_pos;
@@ -65,7 +65,7 @@ int *color, int shift)
 	return (0);
 }
 
-static void	free_components(t_get_color *c)
+static void	free_rgb(t_get_color *c)
 {
 	if (c)
 	{
@@ -99,14 +99,14 @@ int	get_color(int *color, char *line)
 	ft_bzero(&c, sizeof(t_get_color));
 	c.ret = 1;
 	c.start = 2;
-	if (validate_component(line, &c, color, 16) == -1)
-		return (free_components(&c), -1);
-	if (validate_component(line, &c, color, 8) == -1)
-		return (free_components(&c), -1);
-	if (validate_component(line, &c, color, 0) == -1)
-		return (free_components(&c), -1);
+	if (validate_rgb(line, &c, color, 16) == -1)
+		return (free_rgb(&c), -1);
+	if (validate_rgb(line, &c, color, 8) == -1)
+		return (free_rgb(&c), -1);
+	if (validate_rgb(line, &c, color, 0) == -1)
+		return (free_rgb(&c), -1);
 	if (!c.temp[0] || !c.temp[1] || !c.temp[2])
 		c.ret = -1;
-	free_components(&c);
+	free_rgb(&c);
 	return (c.ret);
 }

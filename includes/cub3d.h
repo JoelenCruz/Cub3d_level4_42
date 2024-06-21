@@ -6,7 +6,7 @@
 /*   By: everton <everton@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 20:10:34 by everton           #+#    #+#             */
-/*   Updated: 2024/06/20 21:57:39 by everton          ###   ########.fr       */
+/*   Updated: 2024/06/21 12:21:33 by everton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@
 /* -------------------------------------------------------------------------- */
 /* MACROS                                                                */
 /* -------------------------------------------------------------------------- */
-# define ERROR_NUMB_ARG "Error\nInvalid number of arguments.\n"
+# define ERROR_NUMB_ARG "Error\nInvalid number of arguments."
+# define ERROR_TRY_ARG " Try ./cub3d <map.cub>.\n"
 # define ERROR_EXTENSION "Error\nInvalid file extension.\n"
 # define ERROR_MEMORY "Error:\nMemory allocation failed\n"
 # define ERROR_INVALID_MAP "Error:\nInvalod map\n"
@@ -198,17 +199,10 @@ typedef struct s_cub
 	t_color		colors;
 }	t_cub;
 
-/* -------------------------------------------------------------------------- */
-/* draw_background.c                                                          */
-/* -------------------------------------------------------------------------- */
-
-int		is_surrounded_walls(t_cub *cub);
-
 /* ------------------------------------------------------------------------- */
 /* check_map                                                          		 */
 /* ------------------------------------------------------------------------- */
 
-void	new_cub_check_args(int argc, char **argv, t_cub *cub);
 void	cub_check_args(int argc, char **argv);
 void	check_map(t_cub *cub);
 
@@ -216,7 +210,6 @@ void	check_map(t_cub *cub);
 /* cub_init                                                          		 */
 /* ------------------------------------------------------------------------- */
 
-void	set_zero(t_cub *cub);
 void	cub_init(t_cub *cub, char **argv);
 int		get_color(int *color, char *line);
 
@@ -225,8 +218,6 @@ int		get_color(int *color, char *line);
 /* ------------------------------------------------------------------------- */
 
 void	draw_pixel(t_img *img, int x, int y, int color);
-void	load_texture(t_cub *cub, t_img *texture);
-void	render_textures(t_cub *cub);
 void	draw_background(t_cub *cub);
 void	cub_mlx_init(t_cub *cub);
 
@@ -234,11 +225,6 @@ void	cub_mlx_init(t_cub *cub);
 /* parse                                                         			 */
 /* ------------------------------------------------------------------------- */
 
-void	parse_color_line(char *str, t_img *img);
-void	print_read_map_lines(t_cub *cub);
-void	parse_texture_line(char *str, t_texture *texture);
-void	parse_map_line(t_cub *cub, char *str);
-int		parser_cub(t_cub *cub);
 void	get_scene_description_data(t_cub *cub);
 
 /* ------------------------------------------------------------------------- */
@@ -246,7 +232,6 @@ void	get_scene_description_data(t_cub *cub);
 /* ------------------------------------------------------------------------- */
 
 void	get_player_info(t_cub *cub);
-void	print_read_map_file(t_cub *cub);
 void	format_map(char ***map, size_t map_height, size_t map_width);
 
 /* ------------------------------------------------------------------------- */

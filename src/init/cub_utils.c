@@ -1,31 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   cub_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joe <joe@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: everton <everton@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 11:27:05 by joe               #+#    #+#             */
-/*   Updated: 2024/06/09 18:11:12 by joe              ###   ########.fr       */
+/*   Updated: 2024/06/21 19:55:44 by everton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
 /**
- * @brief 
- * A função set_temp() aloca memória para um novo array de strings 
- * que terá o mesmo tamanho que o mapa original. Essencialmente, esta função 
- * aloca memória para um novo array de strings e preenche cada string 
- * com espaços em branco, criando um mapa vazio do mesmo 
+ * @brief
+ * A função set_temp() aloca memória para um novo array de strings
+ * que terá o mesmo tamanho que o mapa original. Essencialmente, esta função
+ * aloca memória para um novo array de strings e preenche cada string
+ * com espaços em branco, criando um mapa vazio do mesmo
  * tamanho que o mapa original.
- * 
+ *
  * @param temp Um ponteiro para o ponteiro do novo array de strings.
  * @param map_height A altura do mapa original.
  * @param map_width A largura do mapa original.
- * 
+ *
  * @return Esta função não retorna um valor.
- * 
+ *
  */
 static void	set_temp(char ***map, size_t map_height, size_t map_width)
 {
@@ -52,15 +52,15 @@ static void	set_temp(char ***map, size_t map_height, size_t map_width)
 }
 
 /**
- * @brief 
- * Esta função determina a posição inicial e a direção 
+ * @brief
+ * Esta função determina a posição inicial e a direção
  * do jogador dentro do mapa.
- * 
- * @param cub Um ponteiro para a estrutura `t_cub`, 
+ *
+ * @param cub Um ponteiro para a estrutura `t_cub`,
  * que contém informações sobre o mapa e o jogador.
  * @param x A coordenada x da posição inicial do jogador no mapa.
  * @param y A coordenada y da posição inicial do jogador no mapa.
- * 
+ *
  * @return Esta função não retorna um valor.
  */
 static void	get_direction(t_cub *cub, size_t x, size_t y)
@@ -81,13 +81,13 @@ static void	get_direction(t_cub *cub, size_t x, size_t y)
 }
 
 /**
- * @brief 
- * Esta função identifica a posição inicial e a direção do jogador 
+ * @brief
+ * Esta função identifica a posição inicial e a direção do jogador
  * no mapa e atualiza as informações do jogador.
- * 
- * @param cub Um ponteiro para a estrutura `t_cub`, 
+ *
+ * @param cub Um ponteiro para a estrutura `t_cub`,
  * que contém informações sobre o mapa e o jogador.
- * 
+ *
  * @return Esta função não retorna um valor.
  */
 void	get_player_info(t_cub *cub)
@@ -117,15 +117,15 @@ void	get_player_info(t_cub *cub)
 }
 
 /**
- * @brief 
- * A função format_map() reformata o mapa, substituindo caracteres 
+ * @brief
+ * A função format_map() reformata o mapa, substituindo caracteres
  * de nova linha por espaços e atualizando o ponteiro do mapa.
- * 
+ *
  * @param map Um ponteiro para o ponteiro do array de strings que representa
   o mapa.
  * @param map_height A altura atual do mapa.
  * @param map_width A largura atual do mapa.
- * 
+ *
  * @return Esta função não retorna um valor.
  */
 void	format_map(char ***map, size_t map_height, size_t map_width)
