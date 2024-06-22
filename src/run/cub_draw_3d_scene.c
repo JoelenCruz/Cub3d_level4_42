@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw_3d_scene.c                                    :+:      :+:    :+:   */
+/*   cub_draw_3d_scene.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: evdos-sa <evdos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 16:53:17 by joe               #+#    #+#             */
-/*   Updated: 2024/06/19 16:08:18 by evdos-sa         ###   ########.fr       */
+/*   Updated: 2024/06/22 14:03:46 by evdos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static void	set_3d_cast(t_cub *cub, t_raycast *rc)
 	rc->vertical_line = (WIN_HEIGHT * WIN_WIDTH / WALL_HEIGHT) / rc->distance;
 	rc->line_off = WIN_HEIGHT / 2 - rc->vertical_line / 2;
 	rc->line_y = 0;
-	rc->ray_horizontal_size = WIN_WIDTH / MAX_RAYS;
+	rc->ray_horizontal_size = 1;
 	set_texture(cub, rc);
 }
 

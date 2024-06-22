@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   raycast.c                                          :+:      :+:    :+:   */
+/*   cub_raycast.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joe <joe@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: evdos-sa <evdos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 16:48:23 by joe               #+#    #+#             */
-/*   Updated: 2024/06/09 16:48:49 by joe              ###   ########.fr       */
+/*   Updated: 2024/06/22 14:04:00 by evdos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	init_raycast(t_cub *cub, t_raycast *rc)
 		rc->deep_of_field_max = cub -> map_height;
 	else
 		rc->deep_of_field_max = cub -> map_width;
-	rc->ray_angle = cub -> p.ang - DR / (MAX_RAYS / FOV) * MAX_RAYS / 2;
+	rc->ray_angle = cub -> p.ang - DR / (WIN_WIDTH / FOV) * WIN_WIDTH / 2;
 	rc->ray = 0;
 	rc -> line_y = 0;
 }
@@ -29,12 +29,12 @@ void	raycast(t_cub *cub)
 	t_raycast	rc;
 
 	init_raycast(cub, &rc);
-	while (rc.ray < MAX_RAYS)
+	while (rc.ray < WIN_WIDTH)
 	{
 		choose_wall(cub, &rc);
 		choose_texture(cub, &rc);
 		draw_3d_walls(cub, &rc);
-		rc.ray_angle += DR / (MAX_RAYS / FOV);
+		rc.ray_angle += DR / (WIN_WIDTH / FOV);
 		rc.ray++;
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: everton <everton@student.42.fr>            +#+  +:+       +#+        */
+/*   By: evdos-sa <evdos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 11:27:05 by joe               #+#    #+#             */
-/*   Updated: 2024/06/21 19:55:44 by everton          ###   ########.fr       */
+/*   Updated: 2024/06/22 13:39:45 by evdos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ static void	get_direction(t_cub *cub, size_t x, size_t y)
 		cub -> p.ang = PI;
 	if (cub -> scene_map[y][x] == 'S')
 		cub -> p.ang = 3 * PI / 2;
+	if (cub -> scene_map[y][x] == 'W')
+		cub -> p.ang = 0;
 	cub -> p.dx = cos (cub -> p.ang);
 	cub -> p.dy = sin (cub -> p.ang);
 }

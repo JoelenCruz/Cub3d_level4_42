@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: everton <everton@student.42.fr>            +#+  +:+       +#+        */
+/*   By: evdos-sa <evdos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 20:10:34 by everton           #+#    #+#             */
-/*   Updated: 2024/06/21 12:21:33 by everton          ###   ########.fr       */
+/*   Updated: 2024/06/22 14:04:00 by evdos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 /* DEFINES                                                                    */
 /* -------------------------------------------------------------------------- */
 # define WIN_NAME "Cub3d"
-# define WIN_WIDTH 960
+# define WIN_WIDTH 950
 # define WIN_HEIGHT 600
 # define ESC_KEY 65307
 # define LEFT_KEY 65361
@@ -48,7 +48,7 @@
 # define DR 0.0174533
 # define FOV 60
 # define MAX_DIST 1000000000
-# define MAX_RAYS 480
+// # define WIN_WIDTH 480
 # define RAY_HORIZONTAL_SIZE 16
 # define FOV 60
 # define WALL_HEIGHT 700
