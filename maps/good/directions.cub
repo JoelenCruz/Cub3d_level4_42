@@ -1,11 +1,11 @@
-NO ./textures/42_NO.xpm
+NO ./textures/42_N.xpm
+SO ./textures/42_S.xpm
+WE ./textures/42_W.xpm
+EA ./textures/42_E.xpm
 
 F 211,1,11
-
-SO ./textures/42_SO.xpm
 C 1,1,255
-WE ./textures/42_WE.xpm
-EA ./textures/42_EA.xpm
+
 111111111111111
 100000000000001
 100000000000001

@@ -1,5 +1,3 @@
-
-
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -14,8 +12,7 @@
 
 #include "cub3d.h"
 
-
-void draw_background(t_cub *cub)
+void	draw_background(t_cub *cub)
 {
 	int	x;
 	int	y;
@@ -36,4 +33,3 @@ void draw_background(t_cub *cub)
 		y++;
 	}
 }
-

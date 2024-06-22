@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "cub3d.h"
 
 void	draw_rectangle(t_cub *cub, t_coord start, t_coord end, int color)

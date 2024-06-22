@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: evdos-sa <evdos-sa@student.42.fr>          +#+  +:+       +#+         #
+#    By: everton <everton@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/06 12:38:00 by joe               #+#    #+#              #
-#    Updated: 2024/06/15 13:42:43 by evdos-sa         ###   ########.fr        #
+#    Updated: 2024/06/20 17:16:43 by everton          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,24 +20,25 @@ OBJ_DIR		 = objects/
 
 LFT_DIR	 = libft/
 
-SRC			 = main.c \
+SRC			 = cub_main.c \
 			   cub_init.c \
-			   mlx_init.c \
-			   parse.c \
-			   check_map.c \
-			   utils.c \
+			   cub_init_cub_mlx.c \
+			   cub_parse.c \
+			   cub_get_color.c \
+			   cub_check_map.c \
+			   cub_utils.c \
 			   cub_exit.c \
 			   cub_free.c \
-			   actions.c \
-			   movement.c \
-			   draw_background.c \
+			   cub_actions.c \
+			   cub_movement.c \
+			   cub_draw_background.c \
 			   cub_run.c \
-			   raycast_utils.c \
-			   raycast.c \
-			   draw_rectangle.c \
-			   draw_3d_scene.c \
-			   math.c \
-			   mini_map.c \
+			   cub_raycast_utils.c \
+			   cub_raycast.c \
+			   cub_draw_rectangle.c \
+			   cub_draw_3d_scene.c \
+			   cub_math.c \
+			   cub_mini_map.c \
 
 
 

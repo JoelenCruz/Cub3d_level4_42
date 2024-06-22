@@ -1,0 +1,118 @@
+Evaluation Sheet
+
+
+Introdução
+
+	Por favor, respeite as seguintes regras:
+
+	- Permaneça educado, cortês, respeitoso e construtivo em todo o
+	Processo de avaliação. O bem-estar da comunidade depende isto.
+
+	- Identificar com a pessoa (ou grupo) avaliado o eventual
+	disfunções do trabalho. Aproveite o tempo para discutir e debater o
+	problemas que podem tem sido identificado.
+
+	- Você deve considerar que pode haver alguma diferença em como seus pares
+	poderia ter entendido as instruções do projeto e o escopo de seu
+	funcionalidades. Mantenha sempre a mente aberta e classifique-os da forma mais honesta possível.
+	possível. O pedagogia só é válida e somente se a avaliação pelos pares for
+	feito a sério.
+
+Diretrizes
+
+	- Avaliar apenas os trabalhos que estão no repositório Git do aluno ou grupo.
+
+	- Verifique novamente se o repositório Git pertence ao aluno ou ao grupo. Garanta que
+	o trabalho é para o projeto relevante e verifique também se "git clone" é usado em uma pasta vazia.
+
+	- Verifique cuidadosamente se nenhum apelido malicioso foi usado para enganá-lo e torná-lo
+	avaliar algo que não é o conteúdo do repositório oficial.
+
+	- Evitar qualquer surpresa, verifique cuidadosamente se tanto o avaliador
+	e os alunos avaliados têm revisou os possíveis scripts usados para facilitar a classificação.
+
+	- Se o aluno avaliador não tiver concluído aquela projeto ainda, é obrigatório que este aluno leia toda a matéria antes de iniciar o defesa.
+
+	- Use os flags disponíveis nesta escala para sinalizar um repositório vazio, programa que não funciona, erro de norma, trapaça, etc. casos, a nota termina e a nota final é 0 (ou -42 em caso de trapaça). No entanto, exceto por trapacear, você é encorajado a continuar a discutir o seu trabalho (mesmo que você não tem terminou) para identificar quaisquer problemas que possam ter causado esta falha e evitar repetir o mesmo erro no futuro.
+
+	- Lembre-se que durante a defesa, não falha de segmento, nenhum outro evento inesperado, prematuro, descontrolado ou inesperado encerramento do programa, caso contrário a nota final é O. Use o bandeira apropriada.
+
+	Você nunca deveria ter que editar nenhum arquivo, exceto o arquivo de configuração, se existir. Se você quiser editar um arquivo, reserve um tempo para explicar os motivos com o aluno avaliado e certifique-se de que ambos estão bem com esse.
+
+	- Você também deve verificar a ausência de vazamentos de memória. Qualquer a memória alocada no heap deve ser devidamente liberado antes do final da execução. Você tem permissão para usar qualquer uma das diferentes ferramentas disponível no computador, como vazamentos, valgrind ou e_fence. Em caso de vazamento de memória, marque o sinalizador apropriado.
+
+Anexos
+	assunto.pdf minilibx_opengl.tgz minilibx_mms_20200219_beta.tgz
+
+Parte Obrigatória
+
+	Nome executável
+
+		Verifique se o projeto compila bem (sem relinkar) quando você executa o make comando e que o nome do executável é cub3D. Caso contrário, use o inválido sinalizador de compilação no final do escala.
+
+	Arquivo de configuração
+
+		Verifique se você pode configurar TODOS os seguintes elementos em o arquivo de configuração. A formatação deverá ser conforme descrita no assunto.
+
+			caminho de textura norte - NÃO
+			caminho de textura norte - NÃO
+			caminho de textura leste - EA
+			caminho de textura sul - SO
+			caminho de textura oeste - NÓS
+			cor do piso - F
+			cor do teto - C
+			o mapa (ver assunto para detalhes de configuração do mapa)
+
+		Além disso, verifique se o programa retorna um erro e sai corretamente quando o arquivo de configuração está configurado incorretamente (por exemplo, uma chave desconhecida, chaves duplas, um caminho inválido..) ou se o nome do arquivo não terminar com o .cubextensão. Caso contrário, a defesa termina e use o sinalizador apropriado trabalho incompleto, acidente....
+
+	Elementos técnicos do display
+
+		Vamos avaliar os elementos técnicos do mostrar. Execute o programa e execute os seguintes testes. Se pelo menos um falhar, nenhum ponto será concedido para esta seção. Mova-se para o o próximo.
+
+			Uma janela deve abrir no lançamento do programa. Uma janela deve abrir no lançamento do programa.
+			Uma imagem representando o interior de um labirinto deve ser exibido dentro da janela.
+			Oculte toda ou parte da janela usando outra janela ou usando as bordas da tela e minimize o janelas e maximizá-lo de volta. Em todos os casos, o conteúdo da janela deve permanecer consistente.
+
+	Eventos básicos do usuário
+
+		Nesta seção, vamos avaliar o usuário do programa eventos gerados. Execute os 3 testes a seguir. Se pelo menos um falhar, isso significa que nenhum ponto será concedido para esta seção. Passe para o próximo.
+
+			Clique na cruz vermelha no canto superior esquerdo da janela. O a janela deve fechar e o programa deve sair de forma limpa.
+			Pressione a tecla ESC. A janela deve fechar e o o programa deve sair limpo. No caso deste teste, iremos aceite que outra chave saia do programa, por exemplo, Q.
+			Pressione as quatro teclas de movimento (aceitaremos WASD ou chaves ZQSD) na ordem de sua preferência. Cada pressionamento de tecla deve renderizar um resultado visível na janela, como o movimento/rotação de um jogador.
+
+	Movimentos
+
+		Nesta seção, avaliaremos a implementação do movimento/orientação do jogador dentro O labirinto. Execute os 5 testes a seguir. Se pelo menos um falhar, isso significa que nenhum ponto será ser concedido para esta seção.
+
+			A orientação de spawn do jogador na primeira imagem deve estar de acordo com o arquivo de configuração, teste para cada orientação cardinal (N, S, E, W).
+			Pressione a seta para a esquerda e depois a seta para a direita. A visão do jogador deve girar para a esquerda depois para a direita como se a cabeça do jogador estivesse se movendo.
+			Pressione W (ou Z) e depois S. A visão do jogador deve ir para frente e depois para trás em um linha reta.
+			Pressione A (ou Q) e depois D.
+			A visão do jogador deve ir para a esquerda e depois para o bem em um linha reta.
+			Durante esses quatro movimentos, a exibição foi suave? Por suave queremos dizer que é o jogo "jogável" ou é lento.
+
+	Paredes
+
+		Nesta seção, avaliaremos as paredes do labirinto. Execute os 4 testes a seguir. Se em menos um falhar, isso significa que nenhum ponto será concedido para este seção.
+
+			A textura da parede varia dependendo do ponto da bússola para a qual a parede está voltada (norte Sul Leste Oeste). Verifique se as texturas nas paredes e a perspectiva são visível e correto.
+			Verifique se você modifica o caminho de uma textura de parede no o arquivo de configuração, ele modifica a textura renderizada quando o programa é reexecutado. Verifique também se você definir um caminho inexistente gera um erro.
+			Verifique se as cores do piso e do teto estão bem tratadas ao modificá-las no configuração arquivo.
+
+	Gerenciamento de erros
+
+		Nesta seção, avaliaremos o gerenciamento de erros do programa e confiabilidade. Execute os 4 testes a seguir. Se pelo menos um falhar, isso significa que nenhum ponto será concedido por este seção. Passe para o próximo.
+
+			Execute o programa usando vários argumentos e valores aleatórios. Mesmo que o programa não exija nenhum argumento, isso é crítico que esses argumentos não se alternem ou criar erros não tratados.
+			Verifique se não há vazamentos de memória. Você pode usar o comando top ou leaks em outro shell para monitorar se a memória o uso é estável. A memória utilizada não deve aumentar cada vez que um ação é feita.
+			Role o braço ou o rosto no teclado. O programa não deve apresentar comportamentos estranhos e deve permanecer funcional.
+			Modifique o mapa. O programa não deve apresentar qualquer comportamentos estranhos e deve permanecer funcional se o mapa estiver bem configurado, caso contrário, deve levantar um erro.
+
+Bônus
+
+	Analisaremos seus bônus se, e somente se, for obrigatório parte é excelente. Isso significa que você deve preencher a parte obrigatória, começando a final, e seu gerenciamento de erros deve ser impecável, mesmo em casos de distorções ou mau uso. Então se a parte obrigatória não marcou todos os pontos durante este bônus de defesa serão totalmente ignorados.
+	Quando eu for mais velho serei John Carmack
+
+	Observe a parte do bônus em questão e adicione um ponto para cada bônus implementado e totalmente funcional.
+	Avalie de 0 (reprovado) a 5 (excelente)
