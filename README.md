@@ -1,5 +1,12 @@
 
-### README - 42 Project cub3D
+<p align="center">
+  <img src="https://github.com/mcombeau/mcombeau/blob/main/42_badges/cub3de.png"/>
+</p>
+
+# Cub3D
+
+
+
 
 ## Project Objective
 
