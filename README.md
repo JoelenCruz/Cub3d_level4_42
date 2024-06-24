@@ -1,6 +1,4 @@
 
-
-
 ![Animation](https://github.com/JoelenCruz/Cub3d_level4_42/blob/main/assents/Cub3D-ROOTS.gif)
 
 # Cub3D
@@ -37,6 +35,7 @@ Before starting, make sure you have the following prerequisites installed on you
    git clone https://github.com/JoelenCruz/Cub3d_level4_42.git
    cd Cub3d_level4_42.git
    make
+   ./cub3D maps/good/square_map.cub
 
 ![Animation](https://github.com/JoelenCruz/Cub3d_level4_42/blob/main/assents/gif_exemple.gif)
 ## Contributors
