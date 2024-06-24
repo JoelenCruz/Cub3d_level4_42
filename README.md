@@ -34,6 +34,8 @@ Before starting, make sure you have the following prerequisites installed on you
    ```sh
    git clone https://github.com/JoelenCruz/Cub3d_level4_42.git
    cd Cub3d_level4_42.git
+   git submodule init
+   git submodule update
    make
    ./cub3D maps/good/square_map.cub
 
