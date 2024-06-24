@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   movement.c                                         :+:      :+:    :+:   */
+/*   cub_movement.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: evdos-sa <evdos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 11:21:30 by joe               #+#    #+#             */
-/*   Updated: 2024/06/19 16:09:56 by evdos-sa         ###   ########.fr       */
+/*   Updated: 2024/06/22 14:27:39 by evdos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@ static void	player_move(t_cub *cub, double new_x, double new_y)
 	if (cub -> scene_map[(int)cub -> p.y][x_forward] != '1')
 	{
 		cub -> p.x += new_x * STEPS;
-		cub -> p.col_x = x_forward * (WIN_WIDTH / cub -> map_width);
+		cub -> p.col_x = ceil(x_forward * (WIN_WIDTH / cub -> map_width));
 	}
 	if (cub -> scene_map[y_forward][(int)cub -> p.x] != '1')
 	{
 		cub -> p.y += new_y * STEPS;
-		cub -> p.col_y = y_forward * (WIN_HEIGHT / cub -> map_height);
+		cub -> p.col_y = ceil(y_forward * (WIN_HEIGHT / cub -> map_height));
 	}
 }
 

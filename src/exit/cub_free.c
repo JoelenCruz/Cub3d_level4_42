@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub_free.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: everton <everton@student.42.fr>            +#+  +:+       +#+        */
+/*   By: evdos-sa <evdos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 11:22:44 by joe               #+#    #+#             */
-/*   Updated: 2024/06/21 16:35:25 by everton          ###   ########.fr       */
+/*   Updated: 2024/06/22 16:36:13 by evdos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,11 @@ void	free_memory(t_cub *cub)
 		free_ptr(&cub->texture.west_file);
 	if (cub -> texture.east_file)
 		free_ptr(&cub->texture.east_file);
+	mlx_destroy_image (cub -> mlx, cub -> texture.north_image);
+	mlx_destroy_image (cub -> mlx, cub -> texture.south_image);
+	mlx_destroy_image (cub -> mlx, cub -> texture.west_image);
+	mlx_destroy_image (cub -> mlx, cub -> texture.east_image);
+	
 	if (cub -> mlx && cub -> win)
 		mlx_destroy_window (cub -> mlx, cub -> win);
 	if (cub -> mlx)

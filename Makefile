@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: everton <everton@student.42.fr>            +#+  +:+       +#+         #
+#    By: evdos-sa <evdos-sa@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/06 12:38:00 by joe               #+#    #+#              #
-#    Updated: 2024/06/20 17:16:43 by everton          ###   ########.fr        #
+#    Updated: 2024/06/22 14:17:36 by evdos-sa         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ OBJ_DIR		 = objects/
 
 LFT_DIR	 = libft/
 
-SRC			 = cub_main.c \
+SRC			 = main.c \
 			   cub_init.c \
 			   cub_init_cub_mlx.c \
 			   cub_parse.c \
@@ -40,8 +40,6 @@ SRC			 = cub_main.c \
 			   cub_math.c \
 			   cub_mini_map.c \
 
-
-
 HDR			 = cub3d.h
 
 HDR			:= ${addprefix ${HDR_DIR}, ${HDR}}
@@ -58,7 +56,7 @@ INCLUDE		 = ${HDR_DIR} ${LFT_DIR}
 
 INCLUDE		:= ${addprefix -I, ${INCLUDE}}
 
-CFLAGS		 = -Wall -Werror -Wextra
+CFLAGS		 = -Wall -Werror -Wextra -g
 
 MKFLAGS		 = -j35 -s --no-print-directory --directory=${LFT_DIR}
 
@@ -93,7 +91,6 @@ ${NAME}: ${OBJ_DIR} ${OBJ} FORCE
 			echo ${CUB3D_MSG} Nothing to be done for \'${RECIPE_NAME}\'.; \
 		fi \
 	else \
-		echo ${CUB3D_MSG} Building ${NAME}; \
 		${CC} ${CFLAGS} ${OBJ} ${INCLUDE} ${LIBFT} ${OT_FLAGS} -o ${NAME}; \
 	fi
 
