@@ -1,8 +1,8 @@
 
-<p align="center">
-  <img src="https://github.com/mcombeau/mcombeau/blob/main/42_badges/cub3de.png"/>
-</p>
 
+
+![Animation](https://github.com/JoelenCruz/Cub3d_level4_42/blob/main/assents/Cub3D-ROOTS.gif)
+ 
 # Cub3D
 
 
